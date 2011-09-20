@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
+import dawn.swing.*;
+
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
 
@@ -44,18 +46,17 @@ public class DawnWindow extends JFrame implements WindowListener{
 		
 		// Create accessible 'content' panel
 		JPanel content = new JPanel(new BorderLayout());
-		content.setPreferredSize(new Dimension(300,300));// Temporary until filled
 		this.setContentPane(content);
-		content.add(new PlayButton());
+		
+		content.add(new TrackList(), CENTER);
+		content.add(new PlayButton(), SOUTH);
 		
 		// Set Window close operation and set visible
 		this.pack();
-		this.setVisible(true);
-		
+		this.setVisible(true);	
 	}
 	
 	// WindowListener methods, most do nothing, quit GST on close event
-	
 	public void windowOpened(WindowEvent e){}
 	public void windowClosing(WindowEvent e){
 		Dawn.playbin.setState(State.NULL);

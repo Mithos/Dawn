@@ -37,7 +37,7 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attr) {
 		try{
 			if(Files.probeContentType(file).startsWith("audio")){
-				synchronized(this){
+				synchronized(this){ // Synchronize so cannot start next file until previous file is completed
 					Library.tracks.add(new Track(file.toFile())); // toFile() method needed as Gst uses File
 					playbin.setInputFile(file.toFile());
 					playbin.setState(State.PAUSED);

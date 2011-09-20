@@ -51,14 +51,6 @@ public class Dawn{
         
         // Build library
         Library.rebuildLibrary();
-       
-        // Test block
-        
-        for(Track t : Library.tracks){
-			try{
-				System.out.print(t.title + " -- " + t.file + "\n"); 
-			} catch(Exception e){}
-		} 
         
         // Create Dawn Window
 		SwingUtilities.invokeLater(new Runnable(){
