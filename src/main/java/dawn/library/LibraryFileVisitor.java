@@ -51,11 +51,6 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	
 	/** Action to take on tag events */
 	public void tagsFound(GstObject source, TagList tagList) {
-		String[] tags = new String[tagList.getTagNames().size()];
-		short tagCount = 0;
-		for (String tag : tagList.getTagNames()) {
-			tags[tagCount++] = (String) tagList.getValue(tag, 0);
-		}
-		Library.tracks.get(fileCount).assignTags(tags);
+		Library.tracks.get(fileCount).setTags(tagList);
 	}
 }

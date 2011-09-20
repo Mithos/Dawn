@@ -58,7 +58,9 @@ public class Dawn{
         // Test block
         
         for(Track t : Library.tracks){
-			System.out.print(t.file.toString() + " -- "+ t.title.toString() + "\n"); 
+			try{
+				System.out.print(t.file.toString() + " -- "+ t.tags.getValue("title",0).toString() + "\n"); 
+			} catch(Exception e){}
 		} 
         
         // Create Dawn Window

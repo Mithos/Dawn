@@ -1,15 +1,13 @@
 package dawn;
 
 import java.io.File;
+import org.gstreamer.TagList;
 
 /** A track structure */
 public class Track{
 	
 	public final File file;
-	public String artist = "";
-	public String album = "";
-	public String title = "";
-	public int trackNumber = 0;
+	public TagList tags;
 	
 	/** Create a new Track object from the given File and tags */
 	public Track(File file){
@@ -17,14 +15,7 @@ public class Track{
 		this.file = file;
 	}
 	
-	public void assignTags(String[] tags){
-		
-		// Parse the given tags and assign the relevent fields
-		// Largely discard tag data, only store the bits we're interested in
-		// TODO work out parse settings, simple regex should be enough
-		artist = "";
-		album = "";
-		title = "";
-		trackNumber = 0;
+	public void setTags(TagList tags){
+		this.tags = tags;
 	}
 }
