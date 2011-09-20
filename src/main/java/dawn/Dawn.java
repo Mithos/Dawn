@@ -2,10 +2,8 @@ package dawn;
 
 // Import statements
 // Java utils
-import java.util.Vector;
 import java.nio.*;
 import java.nio.file.*;
-import static java.nio.file.FileVisitResult.*;
 import java.nio.charset.*;
 import javax.swing.SwingUtilities;
 
@@ -23,7 +21,6 @@ import org.gstreamer.elements.*;
 public class Dawn{
 	
 	public static PlayBin2 playbin = null;
-	public static Vector<Track> library = new Vector<Track>();
 	
 	// Main method (and associated constructor)
 		
@@ -59,7 +56,7 @@ public class Dawn{
         
         for(Track t : Library.tracks){
 			try{
-				System.out.print(t.file.toString() + " -- "+ t.tags.getValue("title",0).toString() + "\n"); 
+				System.out.print(t.title + " -- " + t.file + "\n"); 
 			} catch(Exception e){}
 		} 
         
@@ -70,8 +67,8 @@ public class Dawn{
 			}
 		});
 		
-		// Initialize GST
-		playbin.setInputFile(Paths.get(System.getProperty("user.home"),"Music","dd.ogg").toFile());
+		// Test playbin
+		playbin.setInputFile(Library.tracks.get((int)(Math.random()*Library.tracks.size())).file);
         
 	}
 	
@@ -82,7 +79,7 @@ public class Dawn{
 		Path config = Paths.get(System.getProperty("user.home"), ".dawn", "dawnrc");
 		Charset charset = Charset.forName("US-ASCII");
 		
-		// Read Music Library path. This is the first line of the config file.
+		// Read Music Library path. This is the first line of the config file atm.
 		try{
 			Library.setPath(Paths.get(Files.readAllLines(config, charset).get(0)));
 		} catch (Exception e){

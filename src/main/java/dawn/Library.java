@@ -1,16 +1,10 @@
 package dawn;
 
-import java.nio.*;
-import java.nio.file.*;
-import java.nio.file.attribute.*;
-import static java.nio.file.FileVisitResult.*;
-import java.nio.charset.*;
+import java.nio.file.Path;
+import java.nio.file.Files;
 import java.util.Vector;
 
-import dawn.library.*;
-
-import org.gstreamer.*;
-import org.gstreamer.elements.*;
+import dawn.library.LibraryFileVisitor;
 /**
  * The library.
  * 

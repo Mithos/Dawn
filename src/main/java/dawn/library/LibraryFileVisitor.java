@@ -21,6 +21,7 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	// Create tag scanning playbin
 	private final PlayBin2 playbin = new PlayBin2("LibraryFileVisitor");
 	
+	// Initialize utility primatives
 	private int fileCount = 0;
 	
 	public LibraryFileVisitor(){
@@ -36,15 +37,18 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attr) {
 		try{
 			if(Files.probeContentType(file).startsWith("audio")){
-				Library.tracks.add(new Track(file.toFile())); // toFile() method needed as Gst uses File
-				playbin.setInputFile(file.toFile());
-				playbin.setState(State.PAUSED);
-				fileCount++;
-				playbin.setState(State.NULL); // This is quite an important line it turns out :P
+				synchronized(this){
+					Library.tracks.add(new Track(file.toFile())); // toFile() method needed as Gst uses File
+					playbin.setInputFile(file.toFile());
+					playbin.setState(State.PAUSED);
+					playbin.setState(State.NULL); // This is quite an important line it turns out :P
+					fileCount++;
+				}
 			}
 		}catch(Exception e){
 			// EXCEPTION, EXCEPTION, EXCEPTION
 		}
+		// Move on to next file
 		return CONTINUE;
 	}
 	
