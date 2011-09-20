@@ -1047,7 +1047,7 @@ Module descriptor is processed : org.scala-tools.testing#test-interface;0.5
 	[NOT REQUIRED] jline#jline;0.9.94!jline.jar
 	[NOT REQUIRED] org.scala-tools.sbt#cache_2.8.1;0.10.1!cache_2.8.1.jar
 	[NOT REQUIRED] org.scala-tools.testing#test-interface;0.5!test-interface.jar
-:: resolution report :: resolve 2095ms :: artifacts dl 117ms
+:: resolution report :: resolve 2335ms :: artifacts dl 285ms
 Nbr of module to sort : 35
 Sort dependencies of : org.scala-tools.sbt#sbt_2.8.1;0.10.1 / Number of dependencies = 5
 Sort dependencies of : org.scala-tools.sbt#main_2.8.1;0.10.1 / Number of dependencies = 11
@@ -1217,7 +1217,7 @@ Module descriptor is processed : org.scala-tools.testing#test-interface;0.5
 Module descriptor is processed : org.scala-tools.sbt#compiler-interface;0.10.1
 Module descriptor is processed : org.scala-tools.sbt#precompiled-2_9_0-1;0.10.1
 	report for org.scala-tools.sbt#boot-app;1.0 default produced in /home/james/.ivy2/cache/org.scala-tools.sbt-boot-app-default.xml
-	resolve done (2095ms resolve - 117ms download)
+	resolve done (2335ms resolve - 285ms download)
 :: retrieving :: org.scala-tools.sbt#boot-app
 	checkUpToDate=true
 no explicit confs given for retrieve, using ivy file: /home/james/.ivy2/cache/resolved-org.scala-tools.sbt-boot-app-1.0.xml
@@ -1296,5 +1296,5 @@ post 1.3 ivy file: using exact as default matcher
 		to /home/james/workspace/Dawn/project/boot/scala-2.8.1/org.scala-tools.sbt/sbt/0.10.1/persist_2.8.1-0.10.1.jar
 	retrieving /home/james/.ivy2/cache/org.scala-tools.sbt/incremental-compiler_2.8.1/jars/incremental-compiler_2.8.1-0.10.1.jar
 		to /home/james/workspace/Dawn/project/boot/scala-2.8.1/org.scala-tools.sbt/sbt/0.10.1/incremental-compiler_2.8.1-0.10.1.jar
-	36 artifacts copied, 0 already retrieved (6414kB/1709ms)
-	retrieve done (1709ms)
+	36 artifacts copied, 0 already retrieved (6414kB/2324ms)
+	retrieve done (2324ms)
