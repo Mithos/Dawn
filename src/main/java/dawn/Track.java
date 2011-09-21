@@ -3,22 +3,19 @@ package dawn;
 import java.io.File;
 import org.gstreamer.TagList;
 
-/** A track structure */
+/** An imutable track structure */
 public class Track{
 	
 	public final File file;
-	public String title = "Unknown";
-	public String artist = "Unknown";
-	public String album = "Unknown";
-	public short trackNumber = -1;
+	public final String title;
+	public final String artist;
+	public final String album ;
+	public final short trackNumber;
 	
 	/** Create a new Track object from the given File and tags */
-	public Track(File file){
+	public Track(File file, TagList tags){
 		// Assign File fields
 		this.file = file;
-	}
-	
-	public void setTags(TagList tags){
 		
 		// Todo: complete parsing of all tags?
 		// Parsed: artist, album, track-number, title

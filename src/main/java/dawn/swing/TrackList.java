@@ -18,8 +18,8 @@ public class TrackList extends JPanel implements ListSelectionListener{
 	public TrackList(){
 		super(new BorderLayout());
 		Vector<String> trackTitles = new Vector<String>();
-		for(int i = 0; i < Library.tracks.size(); i++)
-			trackTitles.add(Library.tracks.get(i).title);
+		for(int i = 0; i < Dawn.library.size(); i++)
+			trackTitles.add(Dawn.library.get(i).title);
 		list = new JList<String>(trackTitles);
 		list.addListSelectionListener(this);
 		
@@ -38,7 +38,7 @@ public class TrackList extends JPanel implements ListSelectionListener{
 			} else {
 			//Selection, enable the fire button.
 				Dawn.playbin.setState(State.NULL);
-				Dawn.playbin.setInputFile(Library.tracks.get(list.getSelectedIndex()).file);
+				Dawn.playbin.setInputFile(Dawn.library.get(list.getSelectedIndex()).file);
 			}
 		}
 }

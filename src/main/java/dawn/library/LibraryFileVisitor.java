@@ -21,8 +21,9 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	// Create tag scanning playbin
 	private final PlayBin2 playbin = new PlayBin2("LibraryFileVisitor");
 	
-	// Initialize utility primatives
-	private int fileCount = 0;
+	// Initialize utility variables
+	private Path currentPath = null;
+	private boolean currentPathAdded = false; // Used to make sure each file is only added once
 	
 	public LibraryFileVisitor(){
 		playbin.setVideoSink(ElementFactory.make("fakesink", "video-sink"));
@@ -37,11 +38,11 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	public FileVisitResult visitFile(Path file, BasicFileAttributes attr) {
 		try{
 			if(Files.probeContentType(file).startsWith("audio")){
-				synchronized(this){ // Synchronize so cannot start next file until previous file is completed
-					Library.tracks.add(new Track(file.toFile())); // toFile() method needed as Gst uses File
+				currentPath = file;
+				synchronized(currentPath){ // Synchronize so cannot start next file until previous file is completed
+					currentPathAdded = false;
 					playbin.setInputFile(file.toFile());
 					playbin.setState(State.PAUSED);
-					fileCount++;
 					playbin.setState(State.NULL); // This is quite an important line it turns out :P
 				}
 			}
@@ -55,6 +56,9 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	
 	/** Action to take on tag events */
 	public void tagsFound(GstObject source, TagList tagList) {
-		Library.tracks.get(fileCount).setTags(tagList);
+		if(!currentPathAdded){
+			Dawn.library.add(new Track(currentPath.toFile(), tagList));
+			currentPathAdded = true;
+		}
 	}
 }

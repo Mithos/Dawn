@@ -2,6 +2,7 @@ package dawn;
 
 // Import statements
 // Java utils
+import java.util.Vector;
 import java.nio.*;
 import java.nio.file.*;
 import java.nio.charset.*;
@@ -10,6 +11,9 @@ import javax.swing.SwingUtilities;
 // Gstreamer classes
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
+
+// Library classes
+import dawn.library.*;
 
 /**
  * The main class of Dawn.
@@ -20,7 +24,27 @@ import org.gstreamer.elements.*;
  */
 public class Dawn{
 	
+	// Public playbin for universal access
 	public static PlayBin2 playbin = null;
+	
+	// public track library and associated methods
+	
+	public static Vector<Track> library = new Vector<Track>();
+	private static Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
+	
+	public static void setPath(Path path){
+		libraryPath = path;
+	}
+	
+	public static void rebuildLibrary(){
+		// Walk file tree
+		try{
+			LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
+			Files.walkFileTree(libraryPath, fileVisitor);
+		} catch (Exception e){
+			// HANDLE YOUR EXCEPTIONS!
+		}
+	}
 	
 	// Main method (and associated constructor)
 		
@@ -50,7 +74,7 @@ public class Dawn{
         loadConfig();
         
         // Build library
-        Library.rebuildLibrary();
+        rebuildLibrary();
         
         // Create Dawn Window
 		SwingUtilities.invokeLater(new Runnable(){
@@ -60,7 +84,7 @@ public class Dawn{
 		});
 		
 		// Test playbin
-		playbin.setInputFile(Library.tracks.get((int)(Math.random()*Library.tracks.size())).file);
+		playbin.setInputFile(Dawn.library.get((int)(Math.random()*Dawn.library.size())).file);
         
 	}
 	
@@ -73,12 +97,9 @@ public class Dawn{
 		
 		// Read Music Library path. This is the first line of the config file atm.
 		try{
-			Library.setPath(Paths.get(Files.readAllLines(config, charset).get(0)));
+			setPath(Paths.get(Files.readAllLines(config, charset).get(0)));
 		} catch (Exception e){
 			//Todo error handling
-		} finally {
-			// Set path to defult if not specified
-			if(null == Library.getPath()) Library.setPath(Paths.get(System.getProperty("user.home"), "Music"));
 		}
 		
 	}
