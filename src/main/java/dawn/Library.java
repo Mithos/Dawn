@@ -10,11 +10,11 @@ import dawn.library.LibraryFileVisitor;
  * 
  * The library is mainly done statically, with its own playbin to scan metadata tags.
  */
-public class Library{
-	
-	private static Path libraryPath = null;
+public class Library {
 
 	public static Vector<Track> tracks = new Vector<Track>();
+	
+	private static Path libraryPath = null;
 	
 	public static Path getPath(){
 		return libraryPath;

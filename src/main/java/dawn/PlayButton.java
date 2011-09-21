@@ -18,10 +18,8 @@ public class PlayButton extends JButton implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		if (Dawn.playbin.getState() == State.PLAYING){
 			Dawn.playbin.setState(State.PAUSED);
-			setText("Play");
 		} else {
 			Dawn.playbin.setState(State.PLAYING);
-			setText("Pause");
 		}
 	}
 }

@@ -41,8 +41,8 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 					Library.tracks.add(new Track(file.toFile())); // toFile() method needed as Gst uses File
 					playbin.setInputFile(file.toFile());
 					playbin.setState(State.PAUSED);
-					playbin.setState(State.NULL); // This is quite an important line it turns out :P
 					fileCount++;
+					playbin.setState(State.NULL); // This is quite an important line it turns out :P
 				}
 			}
 		}catch(Exception e){
