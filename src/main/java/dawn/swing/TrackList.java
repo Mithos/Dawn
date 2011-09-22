@@ -112,9 +112,10 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
      * Model getValueAt method returns the Track object when given a column of -1
      */
     private void setTrack(){
-		Dawn.playbin.setState(State.NULL);
-		Dawn.playbin.setInputFile( ((Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1)).file );
-		Dawn.playbin.setState(State.PLAYING);
+		Dawn.playlist.addElement( (Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1));
+		//Dawn.playbin.setState(State.NULL);
+		//Dawn.playbin.setInputFile( ((Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1)).file );
+		//Dawn.playbin.setState(State.PLAYING);
 	}	
 	
 }

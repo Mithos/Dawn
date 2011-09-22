@@ -24,15 +24,20 @@ public class PlayList extends JPanel implements MouseListener, KeyListener, Bus.
 		list = new JList<Track>(Dawn.playlist);
 		list.addMouseListener(this);
 		list.addKeyListener(this);
-		Dawn.playlist.getBus().connect(this);
+		Dawn.playbin.getBus().connect(this);
 		list.setCellRenderer(new TrackRenderer());
 		
 		JScrollPane listScroller = new JScrollPane(list);
 		listScroller.setPreferredSize(new Dimension(200, 200));
 		
+		// Setup Header
+		JLabel header = new JLabel ("Now Playing");
+		header.setHorizontalAlignment(JLabel.CENTER);
+		header.setVerticalAlignment(JLabel.CENTER);
+		
 		// Construct panel
 		this.add(listScroller, BorderLayout.CENTER);
-		this.add(new JLabel("Now Playing", BorderLayout.NORTH));
+		this.add(header, BorderLayout.NORTH);
 	}
 
 	// Renderer code

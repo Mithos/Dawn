@@ -7,6 +7,7 @@ import java.nio.*;
 import java.nio.file.*;
 import java.nio.charset.*;
 import javax.swing.SwingUtilities;
+import javax.swing.DefaultListModel;
 
 // Gstreamer classes
 import org.gstreamer.*;
@@ -46,8 +47,8 @@ public class Dawn{
 		}
 	}
 	
-	// Public playlist vector
-	public static Vector<Track> playlist = new Vector<Track>();
+	// Public playlist vector - using list model so playlist can see it
+	public static DefaultListModel<Track> playlist = new DefaultListModel<Track>();
 	
 	
 	// Main method (and associated constructor)
@@ -86,9 +87,6 @@ public class Dawn{
 				new DawnWindow();
 			}
 		});
-		
-		// Test playbin
-		playbin.setInputFile(Dawn.library.get((int)(Math.random()*Dawn.library.size())).file);
         
 	}
 	
