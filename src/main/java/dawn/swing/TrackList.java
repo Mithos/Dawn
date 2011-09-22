@@ -13,7 +13,8 @@ import org.gstreamer.*;
 
 public class TrackList extends JPanel implements MouseListener, KeyListener{
 	
-	JList<Track> list;
+	private JList<Track> list;
+	
 	
 	public TrackList(){
 		super(new BorderLayout());
@@ -30,7 +31,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 
 	// Renderer code
 	
-	class TrackRenderer extends JLabel implements ListCellRenderer<Track> {
+	private class TrackRenderer extends JLabel implements ListCellRenderer<Track> {
 		public TrackRenderer() {
 			setOpaque(true);
 			setHorizontalAlignment(LEFT);
@@ -69,11 +70,8 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 	
 	// Double click handling
 	public void mousePressed(MouseEvent e) {}
-
     public void mouseReleased(MouseEvent e) {}
-
     public void mouseEntered(MouseEvent e) {}
-
     public void mouseExited(MouseEvent e) {}
 
     public void mouseClicked(MouseEvent e) {
@@ -94,6 +92,5 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
     }
 
     public void keyTyped(KeyEvent e) {}
-
     public void keyReleased(KeyEvent e) {}
 }

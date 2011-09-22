@@ -1,11 +1,11 @@
-package dawn;
+package dawn.swing;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 
-import dawn.swing.*;
+import dawn.*;
 
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
@@ -48,7 +48,7 @@ public class DawnWindow extends JFrame implements WindowListener{
 		JPanel content = new JPanel(new BorderLayout());
 		this.setContentPane(content);
 		
-		content.add(new TrackList(), CENTER);
+		content.add(new TrackList2(), CENTER);
 		content.add(new PlayButton(), SOUTH);
 		
 		// Set Window close operation and set visible

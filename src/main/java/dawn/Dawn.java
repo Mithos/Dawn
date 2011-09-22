@@ -12,8 +12,9 @@ import javax.swing.SwingUtilities;
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
 
-// Library classes
+// Dawn classes
 import dawn.library.*;
+import dawn.swing.*;
 
 /**
  * The main class of Dawn.
