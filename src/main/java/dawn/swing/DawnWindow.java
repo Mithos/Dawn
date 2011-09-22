@@ -48,7 +48,8 @@ public class DawnWindow extends JFrame implements WindowListener{
 		JPanel content = new JPanel(new BorderLayout());
 		this.setContentPane(content);
 		
-		content.add(new TrackList2(), CENTER);
+		content.add(new TrackList(), CENTER);
+		content.add(new PlayList(), EAST);
 		content.add(new PlayButton(), SOUTH);
 		
 		// Set Window close operation and set visible

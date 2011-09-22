@@ -27,9 +27,8 @@ public class Dawn{
 	
 	// Public playbin for universal access
 	public static PlayBin2 playbin = null;
-	
-	// public track library and associated methods
-	
+
+	// public track library 
 	public static Vector<Track> library = new Vector<Track>();
 	private static Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
 	
@@ -46,6 +45,10 @@ public class Dawn{
 			// HANDLE YOUR EXCEPTIONS!
 		}
 	}
+	
+	// Public playlist vector
+	public static Vector<Track> playlist = new Vector<Track>();
+	
 	
 	// Main method (and associated constructor)
 		

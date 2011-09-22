@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.table.*;
 
 import java.util.Vector;
 
@@ -13,59 +14,73 @@ import org.gstreamer.*;
 
 public class TrackList extends JPanel implements MouseListener, KeyListener{
 	
-	private JList<Track> list;
-	
+	private JTable table;
+	private TrackTableModel model;
 	
 	public TrackList(){
+		// Create Panel
 		super(new BorderLayout());
-		list = new JList<Track>(Dawn.library);
-		list.addMouseListener(this);
-		list.addKeyListener(this);
-		list.setCellRenderer(new TrackRenderer());
 		
-		JScrollPane listScroller = new JScrollPane(list);
-		listScroller.setPreferredSize(new Dimension(500, 200));
+		// Create Table
+		model = new TrackTableModel();
+		table = new JTable(model);
+		table.setAutoCreateRowSorter(true);
+		table.setDragEnabled(true);
+		table.addMouseListener(this);
+		table.addKeyListener(this);
 		
-		this.add(listScroller, BorderLayout.CENTER);
+		// Create Scroll Pane and assemble
+		JScrollPane tableScroller = new JScrollPane(table);
+		table.setFillsViewportHeight(true);
+		tableScroller.setPreferredSize(new Dimension(500, 200));
+		
+		this.add(tableScroller, BorderLayout.CENTER);
 	}
-
-	// Renderer code
 	
-	private class TrackRenderer extends JLabel implements ListCellRenderer<Track> {
-		public TrackRenderer() {
-			setOpaque(true);
-			setHorizontalAlignment(LEFT);
-			setVerticalAlignment(CENTER);
-			setFont(new Font("Monospaced", Font.PLAIN, 12));
+	
+	
+	// Model Settings
+	private class TrackTableModel extends AbstractTableModel{
+		private String[] columnNames = { "Track", "Title", "Artist", "Album" }; // create title names
+		private Vector<Track> data = Dawn.library; //get reference to library
+
+		public int getColumnCount() {
+			return columnNames.length;
 		}
 
-		public Component getListCellRendererComponent(JList<? extends Track> list, Track value, int index, boolean isSelected, boolean cellHasFocus) {
-			// Set the colours
-			if (isSelected) {
-				setBackground(list.getSelectionBackground());
-				setForeground(list.getSelectionForeground());
-			} else {
-				setBackground(list.getBackground());
-				setForeground(list.getForeground());
+		public int getRowCount() {
+			return data.size();
+		}
+
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+		
+		/**
+		 * Return the value at the given row/column position
+		 * 
+		 * For the interval [0,3] values are selected from the relevant fields of the track object (track, title, artisit, album).
+		 * For all other values the Track object for the row is returned.
+		 * 
+		 */
+		public Object getValueAt(int row, int col) {
+			switch(col){
+			case 0: return String.valueOf(data.get(row).trackNumber);
+			case 1: return data.get(row).title;
+			case 2: return data.get(row).artist;
+			case 3: return data.get(row).album;
+			default: return data.get(row);
 			}
-
-			// Set the variables
-			// Truncate any Strings that are longer than the char limit.
-			short num = value.trackNumber;
-			String title = value.title;
-			String artist = value.artist;
-			String album = value.album;
-			
-			// If a string is longer than the relevant limit, truncate it and add ...
-			if(title.length() > 47) title = title.substring(0,47) + "...";
-			if(artist.length() > 22) artist = artist.substring(0,22) + "...";
-			if(album.length() > 22) album = album.substring(0,22) + "...";
-
-			//Set the icon and text.
-			setText(String.format("%-3d | %-50s | %-25s | %-25s",num, title, artist, album));
-
-			return this;
 		}
+	
+		/** Always returns String.class() */
+		public Class getColumnClass(int c) {
+			return String.class;
+		}
+		
+		/** Always returns false */
+		public boolean isCellEditable(int row, int col) {return false;}
+					
 	}
 	
 	// Double click handling
@@ -76,21 +91,30 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 
     public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount() == 2){
-			Dawn.playbin.setState(State.NULL);
-			Dawn.playbin.setInputFile(list.getSelectedValue().file);
-			Dawn.playbin.setState(State.PLAYING);
+			setTrack();
 		}
     }
     
-	// Key handling
-	public void keyPressed(KeyEvent e) {
+    // Enter key handling
+    public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_ENTER){
-			Dawn.playbin.setState(State.NULL);
-			Dawn.playbin.setInputFile(list.getSelectedValue().file);
-			Dawn.playbin.setState(State.PLAYING);
+			setTrack();
+			e.consume(); // prevent other actions (e.g. row progression)
 		}
     }
 
     public void keyTyped(KeyEvent e) {}
     public void keyReleased(KeyEvent e) {}
+    
+    /**
+     * Set the track
+     * Use table conversion methods to get the correct object from the model
+     * Model getValueAt method returns the Track object when given a column of -1
+     */
+    private void setTrack(){
+		Dawn.playbin.setState(State.NULL);
+		Dawn.playbin.setInputFile( ((Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1)).file );
+		Dawn.playbin.setState(State.PLAYING);
+	}	
+	
 }
