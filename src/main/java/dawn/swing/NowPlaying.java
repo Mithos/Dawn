@@ -11,9 +11,12 @@ import dawn.*;
 
 import org.gstreamer.*;
 
-public class NowPlaying extends JPanel implements MouseListener, KeyListener{
+public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 	
 	private JList<Track> list;
+	
+	private JButton shuffleButton = new JButton();
+	private boolean shuffle = false;
 	
 	public NowPlaying(){
 		// Initialize panel
@@ -33,9 +36,14 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener{
 		header.setHorizontalAlignment(JLabel.CENTER);
 		header.setVerticalAlignment(JLabel.CENTER);
 		
+		// Setup button
+		shuffleButton.setText("Turn Shuffle On");
+		shuffleButton.addMouseListener(this);
+		
 		// Construct panel
 		this.add(listScroller, BorderLayout.CENTER);
 		this.add(header, BorderLayout.NORTH);
+		this.add(shuffleButton, BorderLayout.SOUTH);
 	}
 
 	// Renderer code
@@ -75,8 +83,16 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener{
     public void mouseExited(MouseEvent e) {}
 
     public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2){
+		if(e.getClickCount() == 2 && e.getSource() == list){
 			setTrack();
+		} else if (e.getSource() == shuffleButton) {
+			shuffle = !shuffle;
+			if(shuffle){
+				shuffleButton.setText("Turn shuffle off");
+			} else {
+				shuffleButton.setText("Turn shuffle on");
+			}
+			Dawn.playQueue.setShuffle(shuffle);
 		}
     }
     

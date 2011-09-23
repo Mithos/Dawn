@@ -18,6 +18,9 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	private PlayBin2 playbin = new PlayBin2("Dawn");
 	private int currentIndex = -1;
 	
+	// Shuffle Handling
+	private boolean shuffle = false;
+	
 	public PlayQueue(){
 		
 		// End Of Stream
@@ -90,7 +93,11 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	
 	public void next(){
 		playbin.setState(State.NULL);
-		currentIndex++;
+		if(shuffle){
+			currentIndex = (int)(Math.random()*data.size());
+		} else {
+			currentIndex++;
+		}
 		if(currentIndex == data.size()){ // If the last song in the queue is playing
 			currentIndex--; // drop down one again. Do not continue playing.
 		} else {
@@ -120,6 +127,10 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	public void setIndex(int index){
 		currentIndex = index;
 		playbin.setInputFile(data.get(currentIndex).file);
+	}
+	
+	public void setShuffle(boolean shuffle){
+		this.shuffle = shuffle;
 	}
 	
 	// Overrides
