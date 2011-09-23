@@ -49,7 +49,7 @@ public class DawnWindow extends JFrame implements WindowListener{
 		this.setContentPane(content);
 		
 		//Create a split pane with the two scroll panes in it.
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new TrackList(), new PlayList());
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new TrackList(), new NowPlaying());
 		splitPane.setResizeWeight(1.0);
 		splitPane.setOneTouchExpandable(false);
 		

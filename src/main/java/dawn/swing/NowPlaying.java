@@ -11,11 +11,11 @@ import dawn.*;
 
 import org.gstreamer.*;
 
-public class PlayList extends JPanel implements MouseListener, KeyListener{
+public class NowPlaying extends JPanel implements MouseListener, KeyListener{
 	
 	private JList<Track> list;
 	
-	public PlayList(){
+	public NowPlaying(){
 		// Initialize panel
 		super(new BorderLayout());
 		
