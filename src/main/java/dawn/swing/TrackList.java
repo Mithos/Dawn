@@ -12,20 +12,22 @@ import dawn.*;
 
 import org.gstreamer.*;
 
-public class TrackList extends JPanel implements MouseListener, KeyListener{
+public class TrackList extends JPanel implements MouseListener, KeyListener, TableModelListener{
 	
 	private JTable table;
-	private TrackTableModel model;
+	private Library model;
 	
 	public TrackList(){
 		// Create Panel
 		super(new BorderLayout());
 		
 		// Create Table
-		model = new TrackTableModel();
+		model = Dawn.library;
 		table = new JTable(model);
 		table.setAutoCreateRowSorter(true);
 		table.setDragEnabled(true);
+		
+		model.addTableModelListener(this);
 		table.addMouseListener(this);
 		table.addKeyListener(this);
 		
@@ -37,50 +39,10 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 		this.add(tableScroller, BorderLayout.CENTER);
 	}
 	
-	
-	
-	// Model Settings
-	private class TrackTableModel extends AbstractTableModel{
-		private String[] columnNames = { "Track", "Title", "Artist", "Album" }; // create title names
-		private Vector<Track> data = Dawn.library; //get reference to library
-
-		public int getColumnCount() {
-			return columnNames.length;
-		}
-
-		public int getRowCount() {
-			return data.size();
-		}
-
-		public String getColumnName(int col) {
-			return columnNames[col];
-		}
-		
-		/**
-		 * Return the value at the given row/column position
-		 * 
-		 * For the interval [0,3] values are selected from the relevant fields of the track object (track, title, artisit, album).
-		 * For all other values the Track object for the row is returned.
-		 * 
-		 */
-		public Object getValueAt(int row, int col) {
-			switch(col){
-			case 0: return String.valueOf(data.get(row).trackNumber);
-			case 1: return data.get(row).title;
-			case 2: return data.get(row).artist;
-			case 3: return data.get(row).album;
-			default: return data.get(row);
-			}
-		}
-	
-		/** Always returns String.class() */
-		public Class getColumnClass(int c) {
-			return String.class;
-		}
-		
-		/** Always returns false */
-		public boolean isCellEditable(int row, int col) {return false;}
-					
+	// Model update handling
+	/** Refresh the table when model data changes */
+	public void tableChanged(TableModelEvent e){
+		table.revalidate();
 	}
 	
 	// Double click handling
@@ -112,10 +74,10 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
      * Model getValueAt method returns the Track object when given a column of -1
      */
     private void setTrack(){
-		Dawn.playlist.addElement( (Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1));
-		//Dawn.playbin.setState(State.NULL);
-		//Dawn.playbin.setInputFile( ((Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1)).file );
-		//Dawn.playbin.setState(State.PLAYING);
+		Dawn.playQueue.add( (Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1));
+		if(Dawn.playQueue.getState() != State.PLAYING){
+			Dawn.playQueue.play();
+		}
 	}	
 	
 }

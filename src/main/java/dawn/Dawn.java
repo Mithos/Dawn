@@ -26,11 +26,11 @@ import dawn.swing.*;
  */
 public class Dawn{
 	
-	// Public playbin for universal access
-	public static PlayBin2 playbin = null;
+	// Public playqueue for universal access
+	public static PlayQueue playQueue = null;
 
 	// public track library 
-	public static Vector<Track> library = new Vector<Track>();
+	public static Library library = new Library();
 	private static Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
 	
 	public static void setPath(Path path){
@@ -38,18 +38,21 @@ public class Dawn{
 	}
 	
 	public static void rebuildLibrary(){
-		// Walk file tree
-		try{
-			LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
-			Files.walkFileTree(libraryPath, fileVisitor);
-		} catch (Exception e){
-			// HANDLE YOUR EXCEPTIONS!
-		}
+		
+		Runnable r = new Runnable(){
+			public void run(){
+				
+				// Walk file tree
+				try{
+					LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
+					Files.walkFileTree(libraryPath, fileVisitor);
+				} catch (Exception e){
+					// HANDLE YOUR EXCEPTIONS!
+				}
+			}
+		};
+		(new Thread(r)).start();
 	}
-	
-	// Public playlist vector - using list model so playlist can see it
-	public static DefaultListModel<Track> playlist = new DefaultListModel<Track>();
-	
 	
 	// Main method (and associated constructor)
 		
@@ -70,16 +73,10 @@ public class Dawn{
         args = Gst.init("Dawn", args);
         
         // Initialize the playbin
-        playbin = new PlayBin2("AudioPlayer");
-        
-        // Prevent any sort of video window from being created
-        playbin.setVideoSink(ElementFactory.make("fakesink", "videosink"));
+        playQueue = new PlayQueue();
         
         // Load configuration from file
         loadConfig();
-        
-        // Build library
-        //rebuildLibrary();
         
         // Create Dawn Window
 		SwingUtilities.invokeLater(new Runnable(){

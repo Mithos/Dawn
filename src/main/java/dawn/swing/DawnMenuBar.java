@@ -10,21 +10,22 @@ import dawn.*;
 public class DawnMenuBar extends JMenuBar implements ActionListener{
 
 	private JMenu dawn;
-	private JMenuItem buildLibrary;
+	private JMenuItem mediaDir;
 	
 	public DawnMenuBar(){
 		dawn = new JMenu("Dawn");
-		buildLibrary = new JMenuItem("Rescan Library");
-		buildLibrary.addActionListener(this);
-		dawn.add(buildLibrary);
+		mediaDir = new JMenuItem("Set Media Folder");
+		mediaDir.addActionListener(this);
+		dawn.add(mediaDir);
 		add(dawn);
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		if(e.getSource() == buildLibrary){
+		if(e.getSource() == mediaDir){
 			Dawn.rebuildLibrary();
-			// need to force a repaint/validate somehow
 		}
 	}
+	
+	// Need to make file chooser to select a folder
 
 }

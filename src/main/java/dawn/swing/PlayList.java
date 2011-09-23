@@ -11,20 +11,18 @@ import dawn.*;
 
 import org.gstreamer.*;
 
-public class PlayList extends JPanel implements MouseListener, KeyListener, Bus.EOS{
+public class PlayList extends JPanel implements MouseListener, KeyListener{
 	
 	private JList<Track> list;
-	
 	
 	public PlayList(){
 		// Initialize panel
 		super(new BorderLayout());
 		
 		// Setup list
-		list = new JList<Track>(Dawn.playlist);
+		list = new JList<Track>(Dawn.playQueue);
 		list.addMouseListener(this);
 		list.addKeyListener(this);
-		Dawn.playbin.getBus().connect(this);
 		list.setCellRenderer(new TrackRenderer());
 		
 		JScrollPane listScroller = new JScrollPane(list);
@@ -66,14 +64,6 @@ public class PlayList extends JPanel implements MouseListener, KeyListener, Bus.
 		}
 	}
 	
-	
-	// End of stream handling
-	public void endOfStream(GstObject source) {
-		list.setSelectedIndex(list.getSelectedIndex() + 1); //Select next track
-		setTrack();
-		
-	}
-	
 	// Double click handling
 	public void mousePressed(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
@@ -98,8 +88,8 @@ public class PlayList extends JPanel implements MouseListener, KeyListener, Bus.
     
     /** Set the track to be the selected track and start playing */
     private void setTrack(){
-		Dawn.playbin.setState(State.NULL);
-		Dawn.playbin.setInputFile( list.getSelectedValue().file );
-		Dawn.playbin.setState(State.PLAYING);
+		Dawn.playQueue.stop();
+		Dawn.playQueue.setIndex( list.getSelectedIndex() );
+		Dawn.playQueue.play();
 	}
 }

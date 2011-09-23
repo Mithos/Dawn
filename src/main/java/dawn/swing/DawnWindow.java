@@ -71,7 +71,7 @@ public class DawnWindow extends JFrame implements WindowListener{
 	// WindowListener methods, most do nothing, quit GST on close event
 	public void windowOpened(WindowEvent e){}
 	public void windowClosing(WindowEvent e){
-		Dawn.playbin.setState(State.NULL);
+		Dawn.playQueue.stop();
 		Gst.quit();
 		this.dispose();
 	}

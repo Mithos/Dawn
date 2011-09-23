@@ -14,25 +14,26 @@ public class PlayButton extends JButton implements ActionListener, Bus.STATE_CHA
 	
 	public PlayButton(){
 		addActionListener(this);
-		Dawn.playbin.getBus().connect(this);
+		Dawn.playQueue.getBus().connect(this);
 		setText("Play");
 	}
 
 	public void actionPerformed(ActionEvent e){
-		if (Dawn.playbin.getState() == State.PLAYING){
-			Dawn.playbin.setState(State.PAUSED);
+		if (Dawn.playQueue.getState() == State.PLAYING){
+			Dawn.playQueue.pause();
 		} else {
-			Dawn.playbin.setState(State.PLAYING);
+			Dawn.playQueue.play();
 		}
 	}
 	
+	// Todo, gui controller
 	public void stateChanged(GstObject source, State old, State current, State pending) {
-		if(source == Dawn.playbin){
+	/*	if(source == Dawn.playQueue){
 			switch(current){
 			case PLAYING: setText("Pause"); break;
 			default: setText("Play"); break;
 			}
-		}
+		}*/
 	}
 
 }
