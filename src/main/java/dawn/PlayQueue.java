@@ -92,7 +92,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 		playbin.setState(State.NULL);
 		currentIndex++;
 		if(currentIndex == data.size()){ // If the last song in the queue is playing
-			// Do nothing
+			currentIndex--; // drop down one again. Do not continue playing.
 		} else {
 			playbin.setInputFile(data.get(currentIndex).file);
 			playbin.setState(State.PLAYING);

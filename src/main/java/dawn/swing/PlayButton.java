@@ -16,6 +16,8 @@ public class PlayButton extends JButton implements ActionListener, Bus.STATE_CHA
 		addActionListener(this);
 		Dawn.playQueue.getBus().connect(this);
 		setText("Play");
+		// Fix size
+		setPreferredSize((new JButton("Pause")).getPreferredSize());
 	}
 
 	public void actionPerformed(ActionEvent e){

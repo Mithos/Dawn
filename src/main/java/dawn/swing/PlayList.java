@@ -53,7 +53,11 @@ public class PlayList extends JPanel implements MouseListener, KeyListener{
 				setBackground(list.getSelectionBackground());
 				setForeground(list.getSelectionForeground());
 			} else {
-				setBackground(list.getBackground());
+				if(0 == index%2){
+					setBackground(list.getBackground());
+				} else { 
+					setBackground(Color.WHITE);
+				}
 				setForeground(list.getForeground());
 			}
 

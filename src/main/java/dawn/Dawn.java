@@ -39,8 +39,8 @@ public class Dawn{
 	
 	public static void rebuildLibrary(){
 		
-		Runnable r = new Runnable(){
-			public void run(){
+		//Runnable r = new Runnable(){
+			//public void run(){
 				
 				// Walk file tree
 				try{
@@ -49,14 +49,14 @@ public class Dawn{
 				} catch (Exception e){
 					// HANDLE YOUR EXCEPTIONS!
 				}
-			}
-		};
-		(new Thread(r)).start();
+			//}
+		//};
+		//(new Thread(r)).start();
 	}
 	
 	// Main method (and associated constructor)
 		
-	public static void main(String[] args){
+	public static void main(String[] args){	
 		new Dawn(args);
 	}
 	
