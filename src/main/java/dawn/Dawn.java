@@ -79,7 +79,7 @@ public class Dawn{
         loadConfig();
         
         // Build library
-        rebuildLibrary();
+        //rebuildLibrary();
         
         // Create Dawn Window
 		SwingUtilities.invokeLater(new Runnable(){
