@@ -53,13 +53,8 @@ public class DawnWindow extends JFrame implements WindowListener{
 		splitPane.setResizeWeight(1.0);
 		splitPane.setOneTouchExpandable(false);
 		
-		//Provide minimum sizes for the two components in the split pane
-		//Dimension minimumSize = new Dimension(100, 50);
-		//listScrollPane.setMinimumSize(minimumSize);
-		//pictureScrollPane.setMinimumSize(minimumSize);
-		
 		content.add(splitPane, CENTER);
-		content.add(new PlayButton(), SOUTH);
+		content.add(new ControlPanel(), SOUTH);
 		
 		this.setJMenuBar(new DawnMenuBar());
 		

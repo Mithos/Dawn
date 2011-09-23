@@ -75,9 +75,6 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
      */
     private void setTrack(){
 		Dawn.playQueue.add( (Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1));
-		if(Dawn.playQueue.getState() != State.PLAYING){
-			Dawn.playQueue.play();
-		}
 	}	
 	
 }
