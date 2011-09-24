@@ -22,7 +22,13 @@ public class DawnMenuBar extends JMenuBar implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == mediaDir){
-			Dawn.rebuildLibrary();
+			SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+				public Void doInBackground(){
+					Dawn.library.rebuild();
+					return null;
+				}
+			};
+			worker.execute();
 		}
 	}
 	

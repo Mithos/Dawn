@@ -31,21 +31,6 @@ public class Dawn{
 
 	// public track library 
 	public static Library library = new Library();
-	private static Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
-	
-	public static void setPath(Path path){
-		libraryPath = path;
-	}
-	
-	public static void rebuildLibrary(){
-		// Walk file tree
-		try{
-			LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
-			Files.walkFileTree(libraryPath, fileVisitor);
-		} catch (Exception e){
-			// HANDLE YOUR EXCEPTIONS!
-		}
-	}
 	
 	// Main method (and associated constructor)
 		
@@ -89,7 +74,7 @@ public class Dawn{
 		
 		// Read Music Library path. This is the first line of the config file atm.
 		try{
-			setPath(Paths.get(Files.readAllLines(config, charset).get(0)));
+			library.setPath(Paths.get(Files.readAllLines(config, charset).get(0)));
 		} catch (Exception e){
 			//Todo error handling
 		}

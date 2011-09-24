@@ -1,11 +1,32 @@
 package dawn;
 
+import dawn.library.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
+
+import java.nio.file.*;
 
 import java.util.Vector;
 
 public class Library extends AbstractTableModel{
+
+	// Path variables
+	private static Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
+	
+	public static void setPath(Path path){
+		libraryPath = path;
+	}
+	
+	public static void rebuild(){
+		// Walk file tree
+		try{
+			LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
+			Files.walkFileTree(libraryPath, fileVisitor);
+		} catch (Exception e){
+			// HANDLE YOUR EXCEPTIONS!
+		}
+	}
 
 	private String[] columnNames = { "Track", "Title", "Artist", "Album" }; // create title names
 	private Vector<Track> data = new Vector<Track>();
