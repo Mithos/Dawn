@@ -88,9 +88,9 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 		} else if (e.getSource() == shuffleButton) {
 			shuffle = !shuffle;
 			if(shuffle){
-				shuffleButton.setText("Turn shuffle off");
+				shuffleButton.setText("Turn Shuffle Off");
 			} else {
-				shuffleButton.setText("Turn shuffle on");
+				shuffleButton.setText("Turn Shuffle On");
 			}
 			Dawn.playQueue.setShuffle(shuffle);
 		}

@@ -38,20 +38,13 @@ public class Dawn{
 	}
 	
 	public static void rebuildLibrary(){
-		
-		//Runnable r = new Runnable(){
-			//public void run(){
-				
-				// Walk file tree
-				try{
-					LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
-					Files.walkFileTree(libraryPath, fileVisitor);
-				} catch (Exception e){
-					// HANDLE YOUR EXCEPTIONS!
-				}
-			//}
-		//};
-		//(new Thread(r)).start();
+		// Walk file tree
+		try{
+			LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
+			Files.walkFileTree(libraryPath, fileVisitor);
+		} catch (Exception e){
+			// HANDLE YOUR EXCEPTIONS!
+		}
 	}
 	
 	// Main method (and associated constructor)

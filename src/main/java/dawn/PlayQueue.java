@@ -29,14 +29,14 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 		// Error loggin
 		playbin.getBus().connect(new Bus.ERROR(){
 			public void errorMessage(GstObject source, int code, String message) {
-				System.err.printf("Error Code %d : %s", code, message);
+				System.err.printf("Error Code %d : %s \n", code, message);
 			}
 		});
 		
 		// Warn logging
 		playbin.getBus().connect(new Bus.WARNING(){
 			public void warningMessage(GstObject source, int code, String message) {
-				System.err.printf("Error Code %d : %s", code, message);
+				System.err.printf("Warn Code %d : %s \n", code, message);
 			}
 		});
 		 // Prevent any sort of video window from being created

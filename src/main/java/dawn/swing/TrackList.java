@@ -14,8 +14,8 @@ import org.gstreamer.*;
 
 public class TrackList extends JPanel implements MouseListener, KeyListener, TableModelListener{
 	
-	private JTable table;
-	private Library model;
+	private final JTable table;
+	private final Library model;
 	
 	public TrackList(){
 		// Create Panel

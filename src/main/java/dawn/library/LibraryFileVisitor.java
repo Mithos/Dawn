@@ -6,6 +6,8 @@ import java.nio.file.attribute.*;
 import static java.nio.file.FileVisitResult.*;
 import java.nio.charset.*;
 
+import javax.swing.*; // So we can modify the table
+
 import dawn.*;
 
 import org.gstreamer.*;
@@ -57,7 +59,9 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	/** Action to take on tag events */
 	public void tagsFound(GstObject source, TagList tagList) {
 		if(!currentPathAdded){
-			Dawn.library.add(new Track(currentPath.toFile(), tagList));
+			Dawn.library.add(new Track(currentPath.toFile(), tags));
+		}
+			
 			currentPathAdded = true;
 		}
 	}
