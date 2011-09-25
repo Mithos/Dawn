@@ -12,13 +12,13 @@ import java.util.Vector;
 public class Library extends AbstractTableModel{
 
 	// Path variables
-	private static Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
+	private Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
 	
-	public static void setPath(Path path){
+	public void setPath(Path path){
 		libraryPath = path;
 	}
 	
-	public static void rebuild(){
+	public void rebuild(){
 		// Walk file tree
 		try{
 			LibraryFileVisitor fileVisitor = new LibraryFileVisitor();
@@ -52,7 +52,7 @@ public class Library extends AbstractTableModel{
 	 */
 	public Object getValueAt(int row, int col) {
 		switch(col){
-		case 0: return String.valueOf(data.get(row).trackNumber);
+		case 0: return new Short(data.get(row).trackNumber);
 		case 1: return data.get(row).title;
 		case 2: return data.get(row).artist;
 		case 3: return data.get(row).album;
@@ -60,9 +60,10 @@ public class Library extends AbstractTableModel{
 		}
 	}
 
-	/** Always returns String.class() */
+	/** Return the class of the data in the column */
 	public Class getColumnClass(int c) {
-		return String.class;
+		if(0 == c) return Short.class;
+		else return String.class;
 	}
 	
 	/** Always returns false, table cannot be edited by a user. */
@@ -72,6 +73,11 @@ public class Library extends AbstractTableModel{
 	public void add(Track t){
 		data.add(t);
 		fireTableDataChanged();
+	}
+	
+	/** clear the track db */
+	public void clear(){
+		data = new Vector<Track>();
 	}
 
 }

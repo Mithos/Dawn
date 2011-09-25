@@ -6,7 +6,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-import java.util.Vector;
+import java.util.*;
+import java.nio.file.*;
 
 import dawn.*;
 
@@ -16,6 +17,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 	
 	private final JTable table;
 	private final Library model;
+	private final TableRowSorter<Library> sorter;
 	
 	public TrackList(){
 		// Create Panel
@@ -24,12 +26,27 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 		// Create Table
 		model = Dawn.library;
 		table = new JTable(model);
-		table.setAutoCreateRowSorter(true);
 		table.setDragEnabled(true);
 		
-		model.addTableModelListener(this);
+		//model.addTableModelListener(this);
 		table.addMouseListener(this);
 		table.addKeyListener(this);
+		
+		// Setup sorting and filtering -- fails
+		sorter = new TableRowSorter<Library>(model);
+		ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
+		sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
+		sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
+		sorter.setSortKeys(sortKeys); 
+//		table.setRowSorter(sorter);
+		
+		// Disable user sorting
+		for(MouseListener listener : table.getTableHeader().getMouseListeners()){
+			table.getTableHeader().removeMouseListener(listener);
+		}
+
 		
 		// Create Scroll Pane and assemble
 		JScrollPane tableScroller = new JScrollPane(table);
@@ -42,7 +59,26 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 	// Model update handling
 	/** Refresh the table when model data changes */
 	public void tableChanged(TableModelEvent e){
-		table.revalidate();
+		//table.revalidate();
+	}
+	
+	public void scanMediaLibrary(Path p){
+		model.setPath(p);
+		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
+			public Void doInBackground(){
+				TrackList.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+				model.rebuild(); // rebuild the library
+				TrackList.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				try{
+					table.setRowSorter(sorter);
+				} catch (Exception e){
+					e.printStackTrace();
+					System.exit(1);
+				}
+				return null;
+			}
+		};
+		worker.execute();
 	}
 	
 	// Double click handling

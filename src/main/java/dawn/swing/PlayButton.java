@@ -28,7 +28,6 @@ public class PlayButton extends JButton implements ActionListener, Bus.STATE_CHA
 		}
 	}
 	
-	// Todo, gui controller
 	public void stateChanged(GstObject source, State old, State current, State pending) {
 		switch(current){
 		case PLAYING: setText("Pause"); break;

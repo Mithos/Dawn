@@ -10,11 +10,7 @@ import dawn.*;
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
 
-import static java.awt.BorderLayout.NORTH;
-import static java.awt.BorderLayout.SOUTH;
-import static java.awt.BorderLayout.EAST;
-import static java.awt.BorderLayout.WEST;
-import static java.awt.BorderLayout.CENTER;
+import static java.awt.BorderLayout.*;
 
 /**
  * The top-level dawn window.
@@ -23,6 +19,10 @@ import static java.awt.BorderLayout.CENTER;
  * make sure Gstreamer is closed correctly on an exit).
  */
 public class DawnWindow extends JFrame implements WindowListener{
+	
+	private TrackList trackList = new TrackList();
+	private NowPlaying nowPlaying = new NowPlaying();
+	private ControlPanel controlPanel = new ControlPanel();
 	
 	public DawnWindow(){
 		
@@ -41,7 +41,7 @@ public class DawnWindow extends JFrame implements WindowListener{
 				}
 			}
 		} catch (Exception e) {
-			// Use Default Look and feel on systems where Nimbus is not present
+			e.printStackTrace();
 		}
 		
 		// Create accessible 'content' panel
@@ -49,18 +49,34 @@ public class DawnWindow extends JFrame implements WindowListener{
 		this.setContentPane(content);
 		
 		//Create a split pane with the two scroll panes in it.
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new TrackList(), new NowPlaying());
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, trackList, nowPlaying);
 		splitPane.setResizeWeight(1.0);
 		splitPane.setOneTouchExpandable(false);
 		
 		content.add(splitPane, CENTER);
-		content.add(new ControlPanel(), SOUTH);
+		content.add(controlPanel, SOUTH);
 		
-		this.setJMenuBar(new DawnMenuBar());
+		createMenuBar();
 		
 		// Set Window close operation and set visible
 		this.pack();
 		this.setVisible(true);	
+	}
+	
+	// Create menu bar
+	private void createMenuBar(){
+		ActionListener mediaDirAction = new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				trackList.scanMediaLibrary(java.nio.file.Paths.get(System.getProperty("user.home"), "Music"));
+			}
+		};
+		JMenuBar menuBar = new JMenuBar();
+		JMenu dawn = new JMenu("Dawn");
+		JMenuItem mediaDir = new JMenuItem("Set Media Folder");
+		mediaDir.addActionListener(mediaDirAction);
+		dawn.add(mediaDir);
+		menuBar.add(dawn);
+		setJMenuBar(menuBar);	
 	}
 	
 	// WindowListener methods, most do nothing, quit GST on close event

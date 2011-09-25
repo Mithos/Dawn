@@ -61,6 +61,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	public void add(int index, Track track){
 		data.add(index, track);
 		int insertIndex = index;
+		if(currentIndex >= insertIndex) currentIndex++; // update current index if necessary
 		fireIntervalAdded(this, insertIndex, insertIndex);
 	}
 	
