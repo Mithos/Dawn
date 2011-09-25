@@ -67,6 +67,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	/** remove a track from the given index */
 	public void remove(int index){
 		data.remove(index);
+		if(currentIndex >= index) currentIndex--; // Decrement current Index if necessary
 		fireIntervalRemoved(this, index, index);
 	}
 	
@@ -127,6 +128,10 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	public void setIndex(int index){
 		currentIndex = index;
 		playbin.setInputFile(data.get(currentIndex).file);
+	}
+	
+	public int getIndex(){
+		return currentIndex;
 	}
 	
 	public void setShuffle(boolean shuffle){

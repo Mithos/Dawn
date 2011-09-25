@@ -74,7 +74,11 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
      * Model getValueAt method returns the Track object when given a column of -1
      */
     private void setTrack(){
-		Dawn.playQueue.add( (Track)model.getValueAt(table.convertRowIndexToModel(table.getSelectedRow()), -1));
+		if(table.getSelectedRowCount() > 0){ // Quick fix for null pointers that can potentially be generated when table is updating
+			for(int index : table.getSelectedRows()){
+				Dawn.playQueue.add( (Track)model.getValueAt(table.convertRowIndexToModel(index), -1));
+			}
+		}
 	}	
 	
 }

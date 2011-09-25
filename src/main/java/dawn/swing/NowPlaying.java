@@ -62,7 +62,7 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 				setForeground(list.getSelectionForeground());
 			} else {
 				if(0 == index%2){
-					setBackground(list.getBackground());
+					setBackground(new Color(0xf2, 0xf2, 0xf2));
 				} else { 
 					setBackground(Color.WHITE);
 				}
@@ -83,9 +83,9 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
     public void mouseExited(MouseEvent e) {}
 
     public void mouseClicked(MouseEvent e) {
-		if(e.getClickCount() == 2 && e.getSource() == list){
+		if(e.getClickCount() == 2 && e.getSource() == list && e.getButton() == MouseEvent.BUTTON1){
 			setTrack();
-		} else if (e.getSource() == shuffleButton) {
+		} else if (e.getSource() == shuffleButton && e.getButton() == MouseEvent.BUTTON1) {
 			shuffle = !shuffle;
 			if(shuffle){
 				shuffleButton.setText("Turn Shuffle Off");
@@ -94,12 +94,19 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 			}
 			Dawn.playQueue.setShuffle(shuffle);
 		}
+		/*
+		else if(e.getSource() == list && e.getButton() == MouseEvent.BUTTON2){
+			list.setSelectedIndex(list.locationToIndex(MouseInfo.getPointerInfo().getLocation()));
+			removeTrack();
+		}*/
+		// Right-click code needs more work.
     }
     
 	// Key handling
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_ENTER){
-			setTrack();
+		switch(e.getKeyCode()){
+		case KeyEvent.VK_ENTER: setTrack(); break;
+		case KeyEvent.VK_DELETE: removeTrack(); break;		
 		}
     }
 
@@ -111,5 +118,10 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 		Dawn.playQueue.stop();
 		Dawn.playQueue.setIndex( list.getSelectedIndex() );
 		Dawn.playQueue.play();
+	}
+	
+	/** Remove the selected track from the queue */
+	private void removeTrack(){
+		Dawn.playQueue.remove(list.getSelectedIndex());
 	}
 }
