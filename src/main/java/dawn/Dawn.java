@@ -30,7 +30,7 @@ public class Dawn{
 	public static PlayQueue playQueue = null;
 
 	// public track library 
-	public static Library library = new Library();
+	public static dawn.lowLevel.Library library = new dawn.lowLevel.Library();
 	
 	// Main method (and associated constructor)
 		

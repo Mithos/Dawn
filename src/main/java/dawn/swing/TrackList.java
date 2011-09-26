@@ -16,8 +16,8 @@ import org.gstreamer.*;
 public class TrackList extends JPanel implements MouseListener, KeyListener, TableModelListener{
 	
 	private final JTable table;
-	private final Library model;
-	private final TableRowSorter<Library> sorter;
+	private final dawn.lowLevel.Library model;
+	private final TableRowSorter<dawn.lowLevel.Library> sorter;
 	
 	public TrackList(){
 		// Create Panel
@@ -33,14 +33,14 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 		table.addKeyListener(this);
 		
 		// Setup sorting and filtering -- fails
-		sorter = new TableRowSorter<Library>(model);
+		sorter = new TableRowSorter<dawn.lowLevel.Library>(model);
 		ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
 		sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
 		sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
 		sortKeys.add(new RowSorter.SortKey(0, SortOrder.ASCENDING));
 		sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
 		sorter.setSortKeys(sortKeys); 
-//		table.setRowSorter(sorter);
+		table.setRowSorter(sorter);
 		
 		// Disable user sorting
 		for(MouseListener listener : table.getTableHeader().getMouseListeners()){
@@ -64,6 +64,8 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 	
 	public void scanMediaLibrary(Path p){
 		model.setPath(p);
+		model.rescan();
+		/*
 		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
 			public Void doInBackground(){
 				TrackList.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -79,6 +81,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 			}
 		};
 		worker.execute();
+		*/
 	}
 	
 	// Double click handling

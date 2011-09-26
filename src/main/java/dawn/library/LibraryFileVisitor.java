@@ -59,7 +59,7 @@ public class LibraryFileVisitor extends SimpleFileVisitor<Path> implements Bus.T
 	/** Action to take on tag events */
 	public void tagsFound(GstObject source, TagList tagList) {
 		if(!currentPathAdded){
-			Dawn.library.add(new Track(currentPath.toFile(), tagList));
+			Dawn.library.add(new dawn.lowLevel.Track(currentPath.toFile(), tagList));
 		}
 		currentPathAdded = true;
 	}
