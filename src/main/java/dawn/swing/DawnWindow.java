@@ -29,9 +29,6 @@ public class DawnWindow extends JFrame implements WindowListener{
 		// Super and set title
 		super("Dawn");
 		
-		// Setup window events
-		addWindowListener(this);
-		
 		// Set Nimbus Look and Feel
 		try {
 			for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -43,6 +40,9 @@ public class DawnWindow extends JFrame implements WindowListener{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		// Setup window events
+		addWindowListener(this);
 		
 		// Create accessible 'content' panel
 		JPanel content = new JPanel(new BorderLayout());

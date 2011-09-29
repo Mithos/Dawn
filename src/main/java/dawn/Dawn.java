@@ -14,7 +14,7 @@ import org.gstreamer.*;
 import org.gstreamer.elements.*;
 
 // Dawn classes
-import dawn.library.*;
+import dawn.lowLevel.*;
 import dawn.swing.*;
 
 /**
@@ -30,7 +30,7 @@ public class Dawn{
 	public static PlayQueue playQueue = null;
 
 	// public track library 
-	public static dawn.lowLevel.Library library = new dawn.lowLevel.Library();
+	public static Library library = new Library();
 	
 	// Main method (and associated constructor)
 		

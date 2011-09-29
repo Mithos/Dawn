@@ -1,4 +1,4 @@
-package dawn;
+package dawn.lowLevel;
 
 import javax.swing.AbstractListModel;
 import java.util.Vector;
@@ -6,8 +6,6 @@ import java.util.Vector;
 
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
-
-// TODO multiple add/remove
 
 public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	

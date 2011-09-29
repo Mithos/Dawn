@@ -5,19 +5,21 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.*;
+import java.beans.*;
 
 import java.util.*;
 import java.nio.file.*;
 
 import dawn.*;
+import dawn.lowLevel.*;
 
 import org.gstreamer.*;
 
-public class TrackList extends JPanel implements MouseListener, KeyListener, TableModelListener{
+public class TrackList extends JPanel implements MouseListener, KeyListener{
 	
 	private final JTable table;
-	private final dawn.lowLevel.Library model;
-	private final TableRowSorter<dawn.lowLevel.Library> sorter;
+	private final Library model;
+	private final TableRowSorter<Library> sorter;
 	
 	public TrackList(){
 		// Create Panel
@@ -33,7 +35,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 		table.addKeyListener(this);
 		
 		// Setup sorting and filtering -- fails
-		sorter = new TableRowSorter<dawn.lowLevel.Library>(model);
+		sorter = new TableRowSorter<Library>(model);
 		ArrayList<RowSorter.SortKey> sortKeys = new ArrayList<RowSorter.SortKey>();
 		sortKeys.add(new RowSorter.SortKey(2, SortOrder.ASCENDING));
 		sortKeys.add(new RowSorter.SortKey(3, SortOrder.ASCENDING));
@@ -41,12 +43,6 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 		sortKeys.add(new RowSorter.SortKey(1, SortOrder.ASCENDING));
 		sorter.setSortKeys(sortKeys); 
 		table.setRowSorter(sorter);
-		
-		// Disable user sorting
-		for(MouseListener listener : table.getTableHeader().getMouseListeners()){
-			table.getTableHeader().removeMouseListener(listener);
-		}
-
 		
 		// Create Scroll Pane and assemble
 		JScrollPane tableScroller = new JScrollPane(table);
@@ -56,32 +52,15 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
 		this.add(tableScroller, BorderLayout.CENTER);
 	}
 	
-	// Model update handling
-	/** Refresh the table when model data changes */
-	public void tableChanged(TableModelEvent e){
-		//table.revalidate();
-	}
-	
 	public void scanMediaLibrary(Path p){
-		model.setPath(p);
-		model.rescan();
-		/*
-		SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>(){
-			public Void doInBackground(){
-				TrackList.this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-				model.rebuild(); // rebuild the library
-				TrackList.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-				try{
-					table.setRowSorter(sorter);
-				} catch (Exception e){
-					e.printStackTrace();
-					System.exit(1);
-				}
-				return null;
+		final RescanTask task = new RescanTask(p);
+		task.addPropertyChangeListener(new PropertyChangeListener(){
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(task.getState() == SwingWorker.StateValue.DONE)
+					System.out.println("Worker reports done!");
 			}
-		};
-		worker.execute();
-		*/
+		});
+		task.execute();
 	}
 	
 	// Double click handling
@@ -115,7 +94,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener, Tab
     private void setTrack(){
 		if(table.getSelectedRowCount() > 0){ // Quick fix for null pointers that can potentially be generated when table is updating
 			for(int index : table.getSelectedRows()){
-				Dawn.playQueue.add( (Track)model.getValueAt(table.convertRowIndexToModel(index), -1));
+				Dawn.playQueue.add( (Track)model.getTrackAt(table.convertRowIndexToModel(index)));
 			}
 		}
 	}	

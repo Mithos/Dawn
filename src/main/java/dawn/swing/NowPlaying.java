@@ -8,6 +8,7 @@ import javax.swing.event.*;
 import java.util.Vector;
 
 import dawn.*;
+import dawn.lowLevel.*;
 
 import org.gstreamer.*;
 
@@ -69,7 +70,7 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 				setForeground(list.getForeground());
 			}
 
-			//Set and text.
+			//Set text.
 			setText(value.title);
 
 			return this;
