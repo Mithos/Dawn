@@ -43,7 +43,6 @@ public class RescanTask extends SwingWorker<Void, Track> {
 	// Instance variables for doInBackground to use
 	private Path currentPath = null;
 	private boolean currentPathScanned = false;
-	private TagList tagCache = null;
 	private Vector<Path> musicFiles = new Vector<Path>();
 	
 	/** 
@@ -81,14 +80,10 @@ public class RescanTask extends SwingWorker<Void, Track> {
 		FakeSink video = (FakeSink)ElementFactory.make("fakesink", "video-sink");
 		playbin.setVideoSink(video);
 		playbin.setAudioSink(audio);
-		
-		// Create a cyclic barrier to synchronize threads
-		final CyclicBarrier barrier = new CyclicBarrier(2);
-		
+			
 		// Update the tagCache if this is the first tag event for a given file
 		playbin.getBus().connect(new Bus.TAG(){
 			public void tagsFound(GstObject source, TagList tagList) {
-				System.out.println("tag event");
 				if(!currentPathScanned){
 					RescanTask.this.publish(new Track(currentPath.toFile(), tagList));
 					currentPathScanned = true;
@@ -96,85 +91,25 @@ public class RescanTask extends SwingWorker<Void, Track> {
 			}
 		});
 		
-		/*
-		// Async done should correspond to all tags found, therefore release the lock
-		playbin.getBus().connect(new Bus.ASYNC_DONE(){
-			public void asyncDone(GstObject source) {
-				System.out.println("Async");
-				playbin.setState(State.NULL);
-				try{
-					barrier.await();
-				} catch (BrokenBarrierException e){
-				} catch (InterruptedException e) {
-				}
-			}
-		});
-		
-		// Data flowing means that all tags are found. Alternative to ASYNC_DONE
-		audio.set("signal-handoffs", true);
-        video.set("signal-handoffs", true);
-		
-		BaseSink.HANDOFF handoff = new BaseSink.HANDOFF() {
-            public void handoff(BaseSink sink, Buffer buffer, Pad pad) {
-				System.out.println("Handoff");
-				playbin.setState(State.NULL);
-				try{
-					barrier.await();
-				} catch (BrokenBarrierException e){
-				} catch (InterruptedException e) {
-				}
-            }
-        };
-        //audio.connect(handoff);
-        //video.connect(handoff);
-		*/
 		int taskLength = musicFiles.size();
-		System.out.println(taskLength);
 		
 		// Set each file to the pipe and scan for tags
 		for(int i = 0; i < taskLength; i++){
 			currentPath = musicFiles.get(i);
 			synchronized(currentPath){
-				System.out.println("File Started: " + musicFiles.get(i).toString());
-				
-				
 				currentPathScanned = false;
 				
 				playbin.setInputFile(currentPath.toFile());
 				playbin.setState(State.PAUSED);
 				playbin.setState(State.NULL);
-				/*
-				// Wait for Bus events
-				try{
-					barrier.await(500, TimeUnit.MILLISECONDS); //wait at most half a second
-				} catch (BrokenBarrierException e) {
-				} catch (InterruptedException e) {
-				} catch (TimeoutException e) { // if too long passes without finding tags assume they are null
-					tagCache = null;
-				}*/
-				System.out.println("Barrier passed");
-				// Publish resulting track object
-				//Track t = new Track(currentPath.toFile(), tagCache);
-				System.out.println("Track Created");
-				
-				//publish(t);
-				System.out.println("Published");
-				
 				
 				// Set progress as percentage
 				setProgress((100*i)/taskLength);
-				
-				System.out.println("progress set");
-				
-				// Reset barrier for next iteration in loop
-				//barrier.reset();
-				System.out.println("Barrier reset");
+
 			}
 		}
 		
-		System.out.println("Done Scanning");
 		// Return from method
-		
 		playbin.setState(State.NULL);
 		return null;
 	}
@@ -184,6 +119,5 @@ public class RescanTask extends SwingWorker<Void, Track> {
 		for(Track chunk : chunks){
 			Dawn.library.add(chunk);
 		}
-		System.out.println("Processed chunks");	
 	}
 }
