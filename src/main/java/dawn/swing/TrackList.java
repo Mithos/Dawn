@@ -41,7 +41,16 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 		table = new JTable(model);
 		table.setDragEnabled(true);
 		
-		//model.addTableModelListener(this);
+		TableColumn column = null;
+		for (int i = 0; i < 4; i++) {
+			column = table.getColumnModel().getColumn(i);
+			if (i == 0) {
+				column.setPreferredWidth(10); 
+			} else {
+				column.setPreferredWidth(100);
+			}
+		}
+		
 		table.addMouseListener(this);
 		table.addKeyListener(this);
 		
