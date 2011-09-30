@@ -1,18 +1,18 @@
 package dawn.swing;
 
-import java.awt.FlowLayout;
-import static java.awt.FlowLayout.LEADING;
+import dawn.action.*;
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
-public class ControlPanel extends JPanel{
+
+public class ControlPanel extends JToolBar{
 	
-	private PrevButton prev = new PrevButton();
-	private PlayButton play = new PlayButton();
-	private NextButton next = new NextButton();
+	private PrevAction prev = PrevAction.get();
+	private PlayAction play = PlayAction.get();
+	private NextAction next = NextAction.get();
 	
 	public ControlPanel(){
-		super(new FlowLayout(LEADING));
+		super("Dawn Controls");
 		add(prev);
 		add(play);
 		add(next);

@@ -22,8 +22,15 @@ import org.gstreamer.*;
  * This lightweight component extends JPanel to provide an area for displaying the track listing.
  * This includes a table of tracks, as well as a filter bar and progress bar for library scanning.
  * 
+ * Like all dawn objects this is a singleton.
  */
 public class TrackList extends JPanel implements MouseListener, KeyListener{
+	
+	private static TrackList singleton = null;
+	public static TrackList get(){
+		if(null == singleton) singleton = new TrackList();
+		return singleton;
+	}
 	
 	private final JTable table;
 	private final Library model;
@@ -32,7 +39,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 	private final JProgressBar progressBar;
 	private final JTextField searchBox;
 	
-	public TrackList(){
+	private TrackList(){
 		// Create Panel
 		super(new BorderLayout());
 		

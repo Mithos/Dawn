@@ -20,7 +20,7 @@ import static java.awt.BorderLayout.*;
  */
 public class DawnWindow extends JFrame implements WindowListener{
 	
-	private TrackList trackList = new TrackList();
+	private TrackList trackList = TrackList.get();
 	private NowPlaying nowPlaying = new NowPlaying();
 	private ControlPanel controlPanel = new ControlPanel();
 	
@@ -56,27 +56,11 @@ public class DawnWindow extends JFrame implements WindowListener{
 		content.add(splitPane, CENTER);
 		content.add(controlPanel, SOUTH);
 		
-		createMenuBar();
+		setJMenuBar(new DawnMenu());
 		
 		// Set Window close operation and set visible
 		this.pack();
 		this.setVisible(true);	
-	}
-	
-	// Create menu bar
-	private void createMenuBar(){
-		ActionListener mediaDirAction = new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				trackList.scanMediaLibrary(java.nio.file.Paths.get(System.getProperty("user.home"), "Music"));
-			}
-		};
-		JMenuBar menuBar = new JMenuBar();
-		JMenu dawn = new JMenu("Dawn");
-		JMenuItem mediaDir = new JMenuItem("Set Media Folder");
-		mediaDir.addActionListener(mediaDirAction);
-		dawn.add(mediaDir);
-		menuBar.add(dawn);
-		setJMenuBar(menuBar);	
 	}
 	
 	// WindowListener methods, most do nothing, quit GST on close event

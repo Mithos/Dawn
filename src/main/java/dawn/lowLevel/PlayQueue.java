@@ -100,7 +100,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 		}
 		if(currentIndex == data.size()){ // If the last song in the queue is playing
 			currentIndex--; // drop down one again. Do not continue playing.
-		} else {
+		} else if (null !=data.get(currentIndex)) {
 			playbin.setInputFile(data.get(currentIndex).file);
 			playbin.setState(State.PLAYING);
 		}
@@ -112,8 +112,10 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 		if(currentIndex < 0){ // If the first song in the queue is playing, restart it
 			currentIndex = 0;
 		}
-		playbin.setInputFile(data.get(currentIndex).file);
-		playbin.setState(State.PLAYING);
+		if (null !=data.get(currentIndex)){
+			playbin.setInputFile(data.get(currentIndex).file);
+			playbin.setState(State.PLAYING);
+		}
 	}
 
 	public Bus getBus(){
