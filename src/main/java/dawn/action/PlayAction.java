@@ -30,10 +30,10 @@ public class PlayAction extends AbstractAction {
 	private String play = "Play";
 	
 	public void actionPerformed(ActionEvent e){
-		if (Dawn.playQueue.getState() == State.PLAYING){
-			Dawn.playQueue.pause();
+		if (PlayQueue.get().getState() == State.PLAYING){
+			PlayQueue.get().pause();
 		} else {
-			Dawn.playQueue.play();
+			PlayQueue.get().play();
 		}
 	}
 	

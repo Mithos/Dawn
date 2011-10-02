@@ -21,10 +21,6 @@ import static java.awt.BorderLayout.*;
  */
 public class DawnWindow extends JFrame implements WindowListener{
 	
-	private TrackList trackList = TrackList.get();
-	private NowPlaying nowPlaying = new NowPlaying();
-	private ControlPanel controlPanel = ControlPanel.get();
-	
 	public DawnWindow(){
 		
 		// Super and set title
@@ -50,14 +46,14 @@ public class DawnWindow extends JFrame implements WindowListener{
 		this.setContentPane(content);
 		
 		//Create a split pane with the two scroll panes in it.
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, trackList, nowPlaying);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, TrackList.get(), NowPlaying.get());
 		splitPane.setResizeWeight(1.0);
 		splitPane.setOneTouchExpandable(false);
 		
 		content.add(splitPane, CENTER);
-		content.add(controlPanel, SOUTH);
+		content.add(ControlPanel.get(), SOUTH);
 		
-		setJMenuBar(new DawnMenu());
+		setJMenuBar(DawnMenu.get());
 		
 		// Set Window close operation and set visible
 		this.pack();

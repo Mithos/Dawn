@@ -28,7 +28,7 @@ public class NextAction extends AbstractAction {
 	
 	
 	public void actionPerformed(ActionEvent e){
-		Dawn.playQueue.next();
+		PlayQueue.get().next();
 	}
 	
 }

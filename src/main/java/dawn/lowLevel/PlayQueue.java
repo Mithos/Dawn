@@ -9,6 +9,24 @@ import org.gstreamer.elements.*;
 
 public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	
+	// Singleton Code
+	private static PlayQueue singleton = null;
+	
+	/*
+	 * Initializtaion is separated from retrieval in the Playqueue to ensure that the GStreamer framework has been
+	 * initialized before the PlayQueue is retrieved (i.e. PlayQueue.init() should immediately follow Gst.init(String...) rather
+	 * than allowing get() to assume Gst is initialized)
+	 */
+	
+	public static void init(){
+		if(null == singleton) singleton = new PlayQueue();
+	}
+	
+	public static PlayQueue get(){
+		return singleton;
+	}
+	
+	
 	// Data list
 	private Vector<Track> data = new Vector<Track>();
 	
@@ -19,7 +37,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	// Shuffle Handling
 	private boolean shuffle = false;
 	
-	public PlayQueue(){
+	private PlayQueue(){
 		
 		// End Of Stream
 		playbin.getBus().connect(this);

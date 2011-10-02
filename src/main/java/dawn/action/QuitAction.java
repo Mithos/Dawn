@@ -29,7 +29,7 @@ public class QuitAction extends AbstractAction{
 	
 	public void actionPerformed(ActionEvent e){
 		// Stop gstreamer
-		Dawn.playQueue.stop();
+		PlayQueue.get().stop();
 		Gst.quit();
 		
 		// dispose of all frames

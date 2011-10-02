@@ -25,7 +25,7 @@ public class PrevAction extends AbstractAction{
 	// Action code
 	
 	public void actionPerformed(ActionEvent e){
-		Dawn.playQueue.previous();
+		PlayQueue.get().previous();
 	}
 	
 }

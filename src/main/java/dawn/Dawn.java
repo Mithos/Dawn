@@ -24,8 +24,6 @@ import dawn.swing.*;
  */
 public class Dawn{
 	
-	// Public playqueue for universal access
-	public static PlayQueue playQueue = null;
 	
 	// Main method (and associated constructor)
 		
@@ -46,7 +44,7 @@ public class Dawn{
         args = Gst.init("Dawn", args);
         
         // Initialize the playbin
-        playQueue = new PlayQueue();
+        PlayQueue.init();
         
         // Load configuration from file
         loadConfig();

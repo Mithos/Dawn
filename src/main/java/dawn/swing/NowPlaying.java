@@ -14,17 +14,26 @@ import org.gstreamer.*;
 
 public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 	
+	// Singleton code
+	private static NowPlaying singleton = null;
+	public static NowPlaying get(){
+		if(null == singleton) singleton = new NowPlaying();
+		return singleton;
+	}
+	
+	// NowPlaying code
+	
 	private JList<Track> list;
 	
 	private JButton shuffleButton = new JButton();
 	private boolean shuffle = false;
 	
-	public NowPlaying(){
+	private NowPlaying(){
 		// Initialize panel
 		super(new BorderLayout());
 		
 		// Setup list
-		list = new JList<Track>(Dawn.playQueue);
+		list = new JList<Track>(PlayQueue.get());
 		list.addMouseListener(this);
 		list.addKeyListener(this);
 		list.setCellRenderer(new TrackRenderer());
@@ -93,7 +102,7 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 			} else {
 				shuffleButton.setText("Turn Shuffle On");
 			}
-			Dawn.playQueue.setShuffle(shuffle);
+			PlayQueue.get().setShuffle(shuffle);
 		}
 		/*
 		else if(e.getSource() == list && e.getButton() == MouseEvent.BUTTON2){
@@ -116,13 +125,13 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
     
     /** Set the track to be the selected track and start playing */
     private void setTrack(){
-		Dawn.playQueue.stop();
-		Dawn.playQueue.setIndex( list.getSelectedIndex() );
-		Dawn.playQueue.play();
+		PlayQueue.get().stop();
+		PlayQueue.get().setIndex( list.getSelectedIndex() );
+		PlayQueue.get().play();
 	}
 	
 	/** Remove the selected track from the queue */
 	private void removeTrack(){
-		Dawn.playQueue.remove(list.getSelectedIndex());
+		PlayQueue.get().remove(list.getSelectedIndex());
 	}
 }

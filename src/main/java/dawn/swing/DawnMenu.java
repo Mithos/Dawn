@@ -7,11 +7,18 @@ import javax.swing.*;
 
 public class DawnMenu extends JMenuBar{
 	
+	private static DawnMenu singleton = null;
+	public static DawnMenu get(){
+		if(null == singleton) singleton = new DawnMenu();
+		return singleton;
+	}
+	
+	
 	private JMenu dawn;
 	private JMenu control;
 	private JMenu help;
 	
-	public DawnMenu(){
+	private DawnMenu(){
 		dawn = new JMenu("Dawn");
 		control = new JMenu("Control");
 		help = new JMenu("Help");
