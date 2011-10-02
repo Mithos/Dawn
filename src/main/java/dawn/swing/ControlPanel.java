@@ -18,11 +18,17 @@ public class ControlPanel extends JToolBar{
 	private PlayAction play = PlayAction.get();
 	private NextAction next = NextAction.get();
 	
+	private ShuffleAction shuffle = ShuffleAction.get();
+	
 	private ControlPanel(){
 		super("Dawn Controls");
 		add(prev);
 		add(play);
 		add(next);
+		
+		addSeparator();
+		
+		add(shuffle);
 	}
 	
 }

@@ -157,6 +157,10 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 		this.shuffle = shuffle;
 	}
 	
+	public boolean getShuffle(){
+		return shuffle;
+	}
+	
 	// Overrides
 	// List model implemented as internal vector	
 	@Override

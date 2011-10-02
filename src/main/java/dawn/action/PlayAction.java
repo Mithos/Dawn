@@ -15,6 +15,19 @@ public class PlayAction extends AbstractAction {
 	// Singleton Code
 	private PlayAction(){
 		super("Play");
+		
+		
+		// Text handling code
+		final PlayQueue q = PlayQueue.get();
+		q.getBus().connect(new Bus.STATE_CHANGED(){
+			public void stateChanged(GstObject source, State old, State current, State pending){
+				if(State.PLAYING == q.getState()){
+					PlayAction.get().putValue(PlayAction.NAME, "Pause");
+				} else {
+					PlayAction.get().putValue(PlayAction.NAME, "Play");
+				}
+			}
+		});
 	}
 	
 	private static PlayAction singleton = null;
@@ -25,9 +38,6 @@ public class PlayAction extends AbstractAction {
 	}
 	
 	// Action code
-	
-	private String pause = "Pause";
-	private String play = "Play";
 	
 	public void actionPerformed(ActionEvent e){
 		if (PlayQueue.get().getState() == State.PLAYING){

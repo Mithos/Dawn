@@ -25,9 +25,6 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 	
 	private JList<Track> list;
 	
-	private JButton shuffleButton = new JButton();
-	private boolean shuffle = false;
-	
 	private NowPlaying(){
 		// Initialize panel
 		super(new BorderLayout());
@@ -46,14 +43,9 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
 		header.setHorizontalAlignment(JLabel.CENTER);
 		header.setVerticalAlignment(JLabel.CENTER);
 		
-		// Setup button
-		shuffleButton.setText("Turn Shuffle On");
-		shuffleButton.addMouseListener(this);
-		
 		// Construct panel
 		this.add(listScroller, BorderLayout.CENTER);
 		this.add(header, BorderLayout.NORTH);
-		this.add(shuffleButton, BorderLayout.SOUTH);
 	}
 
 	// Renderer code
@@ -95,14 +87,6 @@ public class NowPlaying extends JPanel implements MouseListener, KeyListener {
     public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount() == 2 && e.getSource() == list && e.getButton() == MouseEvent.BUTTON1){
 			setTrack();
-		} else if (e.getSource() == shuffleButton && e.getButton() == MouseEvent.BUTTON1) {
-			shuffle = !shuffle;
-			if(shuffle){
-				shuffleButton.setText("Turn Shuffle Off");
-			} else {
-				shuffleButton.setText("Turn Shuffle On");
-			}
-			PlayQueue.get().setShuffle(shuffle);
 		}
 		/*
 		else if(e.getSource() == list && e.getButton() == MouseEvent.BUTTON2){

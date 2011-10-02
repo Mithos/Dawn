@@ -35,6 +35,17 @@ public class DawnMenu extends JMenuBar{
 		control.add(NextAction.get());
 		control.add(PrevAction.get());
 		
+		// Testing adding a spinner to the menu.
+		
+		JSpinner stest = new JSpinner();
+		stest.setPreferredSize(new java.awt.Dimension(100, stest.getPreferredSize().height));
+		JPanel volume = new JPanel();
+		volume.setOpaque(false);
+		volume.setLayout(new java.awt.BorderLayout());
+		volume.add(new JLabel("Volume:"), java.awt.BorderLayout.WEST);
+		volume.add(stest, java.awt.BorderLayout.CENTER);
+		control.add(volume);
+		
 	}
 	
 	

@@ -9,6 +9,7 @@ import javax.swing.text.*;
 import java.beans.*;
 
 import java.util.*;
+import java.util.regex.*;
 import java.nio.file.*;
 
 import dawn.*;
@@ -103,7 +104,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 				// If text doesn't parse do not update
 				try{
 					String text = doc.getText(0, doc.getLength());
-					rf = RowFilter.regexFilter(text);
+					rf = RowFilter.regexFilter("(?i)" + text); // (?i) makes it case insensitive
 				} catch (java.util.regex.PatternSyntaxException patternE) {
 					return;
 				} catch (BadLocationException locE){
