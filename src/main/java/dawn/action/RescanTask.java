@@ -1,4 +1,4 @@
-package dawn.lowLevel;
+package dawn.action;
 
 // Util and file imports
 import java.util.*;
@@ -17,6 +17,7 @@ import org.gstreamer.elements.*;
 
 // Dawn imports
 import dawn.*;
+import dawn.lowLevel.*;
 
 /** 
  * This class extends SwingWorker to provide an executable instance that will scan a given folder for
@@ -117,7 +118,7 @@ public class RescanTask extends SwingWorker<Void, Track> {
 	/** Add the tracks published by the background thread to the model on the EDT */
 	public void process(List<Track> chunks){
 		for(Track chunk : chunks){
-			Dawn.library.add(chunk);
+			Library.get().add(chunk);
 		}
 	}
 }

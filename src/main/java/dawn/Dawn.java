@@ -6,12 +6,10 @@ import java.util.Vector;
 import java.nio.*;
 import java.nio.file.*;
 import java.nio.charset.*;
-import javax.swing.SwingUtilities;
-import javax.swing.DefaultListModel;
+import javax.swing.*;
 
 // Gstreamer classes
 import org.gstreamer.*;
-import org.gstreamer.elements.*;
 
 // Dawn classes
 import dawn.lowLevel.*;
@@ -28,9 +26,6 @@ public class Dawn{
 	
 	// Public playqueue for universal access
 	public static PlayQueue playQueue = null;
-
-	// public track library 
-	public static Library library = new Library();
 	
 	// Main method (and associated constructor)
 		
@@ -66,6 +61,7 @@ public class Dawn{
 	}
 	
 	/** Load the config from the config file */
+	// currently there is no config to actually load :P
 	private void loadConfig(){
 		
 		// Open config file, stored in ~/.dawn/dawnrc
@@ -74,7 +70,7 @@ public class Dawn{
 		
 		// Read Music Library path. This is the first line of the config file atm.
 		try{
-			library.setPath(Paths.get(Files.readAllLines(config, charset).get(0)));
+			//library.setPath(Paths.get(Files.readAllLines(config, charset).get(0)));
 		} catch (Exception e){
 			//Todo error handling
 		}

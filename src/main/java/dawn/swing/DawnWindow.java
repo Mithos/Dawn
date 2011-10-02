@@ -6,6 +6,7 @@ import java.util.*;
 import javax.swing.*;
 
 import dawn.*;
+import dawn.action.*;
 
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
@@ -22,7 +23,7 @@ public class DawnWindow extends JFrame implements WindowListener{
 	
 	private TrackList trackList = TrackList.get();
 	private NowPlaying nowPlaying = new NowPlaying();
-	private ControlPanel controlPanel = new ControlPanel();
+	private ControlPanel controlPanel = ControlPanel.get();
 	
 	public DawnWindow(){
 		
@@ -66,15 +67,12 @@ public class DawnWindow extends JFrame implements WindowListener{
 	// WindowListener methods, most do nothing, quit GST on close event
 	public void windowOpened(WindowEvent e){}
 	public void windowClosing(WindowEvent e){
-		Dawn.playQueue.stop();
-		Gst.quit();
-		this.dispose();
+		QuitAction.get().actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Quit"));
 	}
 	public void windowClosed(WindowEvent e){}
 	public void windowIconified(WindowEvent e){}
 	public void windowDeiconified(WindowEvent e){}
 	public void windowActivated(WindowEvent e){}
 	public void windowDeactivated(WindowEvent e){}
-	
 	
 }

@@ -20,20 +20,13 @@ public class DawnMenu extends JMenuBar{
 		add(control);
 		add(help);
 		
+		dawn.add(RescanAction.get());
+		dawn.addSeparator();
+		dawn.add(QuitAction.get());
+		
 		control.add(PlayAction.get());
-		control.add(PrevAction.get());
 		control.add(NextAction.get());
-		
-		// Temporary until moved into action
-		java.awt.event.ActionListener mediaDirAction = new java.awt.event.ActionListener(){
-			public void actionPerformed(java.awt.event.ActionEvent e){
-				TrackList.get().scanMediaLibrary(java.nio.file.Paths.get(System.getProperty("user.home"), "Music"));
-			}
-		};
-		JMenuItem mediaDir = new JMenuItem("Set Media Folder");
-		mediaDir.addActionListener(mediaDirAction);
-		dawn.add(mediaDir);
-		
+		control.add(PrevAction.get());
 		
 	}
 	

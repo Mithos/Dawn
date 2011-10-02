@@ -13,21 +13,21 @@ import javax.swing.table.*;
 // GStreamer imports
 import org.gstreamer.*;
 import org.gstreamer.elements.*;
+import dawn.action.*;
 
+/**
+ * A data structure for storing tracks, that also functions as the table model.
+ * Incapable of modifying itself, the Library should be edited by RescanTasks, which are created by TrackList so that an appropriate
+ * progressBar may be set (however, this connectivity should be moved to the RescanAction)
+ */
 public class Library extends AbstractTableModel{
 
-	//
-	// Path
-	//
-	
-	private Path libraryPath = Paths.get(System.getProperty("user.home"), "Music"); // Initialize to a sensible default
-	
-	public void setPath(Path path){
-		libraryPath = path;
-	}
-	
-	public Path getPath(){
-		return libraryPath;
+	// Singleton code
+	private Library(){};
+	private static Library singleton = null;
+	public static Library get(){
+		if(null == singleton) singleton = new Library();
+		return singleton;
 	}
 
 	//
@@ -91,13 +91,4 @@ public class Library extends AbstractTableModel{
 	
 	/** Always returns false, table cannot be edited by a user. */
 	public boolean isCellEditable(int row, int col) {return false;}
-	
-	//
-	// Library rescan code
-	//
-	
-	/** Create a new worker thread and execute it to walk file tree */
-	public void rescan(){
-		(new RescanTask(getPath())).execute();
-	}
 }

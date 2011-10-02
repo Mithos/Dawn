@@ -13,6 +13,7 @@ import java.nio.file.*;
 
 import dawn.*;
 import dawn.lowLevel.*;
+import dawn.action.*;
 
 import org.gstreamer.*;
 
@@ -44,7 +45,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
 		super(new BorderLayout());
 		
 		// Create Table
-		model = Dawn.library;
+		model = Library.get();
 		table = new JTable(model);
 		table.setDragEnabled(true);
 		
