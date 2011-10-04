@@ -8,42 +8,55 @@ import static java.awt.BorderLayout.*;
 
 import dawn.lowLevel.*;
 
+/**
+ * Volume spinner
+ * 
+ * Unlike most of the components of Dawn, this is not a singleton, as there are two spinners in existance
+ * (one in the control panel and the other in the menu). The listener and the model are singletons created
+ * the first time #get() is called. however, each time #get() is called a new Spinner is returned using these
+ * components.
+ */
 public class VolumeSpinner extends JPanel{
 	
 	// Singleton code
 	
-	private static VolumeSpinner singleton = null;
+	private static ChangeListener listener = null;
+	private static SpinnerNumberModel model = null;
+	
+	/**
+	 * Returns a new Volume spinner
+	 * 
+	 * The volume spinner sets and displays the current volume of the Dawn playbin.
+	 */
 	public static VolumeSpinner get(){
-		if(null == singleton) singleton = new VolumeSpinner();
-		return singleton;
+		if(null == listener) init(); // if this is the first spinner to be created initialize the singletons
+		return new VolumeSpinner(); //return a new spinner that uses the singletons
 	}
 	
-	// Spinner code
-	
-	private SpinnerNumberModel model;
-	private JSpinner spinner;
-	private JLabel label;
-	private ChangeListener listener;
-	
-	private VolumeSpinner(){
-		super(new BorderLayout());
-		
-		// pieces
+	/**
+	 * Initialize the singletons
+	 */
+	private static void init(){
 		model = new SpinnerNumberModel(PlayQueue.INITIAL_VOLUME, 0, 100, 1);
-		spinner = new JSpinner(model);
-		label = new JLabel("Volume");
-		
-		// Change handling
 		listener = new ChangeListener(){
 			public void stateChanged(ChangeEvent e){
 				int value = model.getNumber().intValue();
 				PlayQueue.get().setVolumePercent(value);
 			}
 		};
-		spinner.addChangeListener(listener);
+	}
+	
+	// Spinner code
+	private JSpinner spinner;
+	private JLabel label = new JLabel("Volume:");
+	
+	private VolumeSpinner(){
+		super(new BorderLayout());
 		
-		// assembly
-		//spinner.setPreferredSize(new Dimension(100, spinner.getPreferredSize().height)); //set up size
+		spinner = new JSpinner(model);
+
+		spinner.addChangeListener(listener);
+
 		add(label, WEST);
 		add(spinner, CENTER);
 		
