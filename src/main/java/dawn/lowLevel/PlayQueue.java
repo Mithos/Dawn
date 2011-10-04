@@ -37,6 +37,9 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	// Shuffle Handling
 	private boolean shuffle = false;
 	
+	//initial volume
+	public static int INITIAL_VOLUME = 75;
+	
 	private PlayQueue(){
 		
 		// End Of Stream
@@ -57,6 +60,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 		});
 		 // Prevent any sort of video window from being created
         playbin.setVideoSink(ElementFactory.make("fakesink", "videosink"));
+        playbin.setVolumePercent(PlayQueue.INITIAL_VOLUME);
 	}
 	
 	// Vector methods
@@ -159,6 +163,16 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	
 	public boolean getShuffle(){
 		return shuffle;
+	}
+	
+	// Volume control
+	
+	public void setVolumePercent(int vol){
+		playbin.setVolumePercent(vol);
+	}
+	
+	public int getVolumePercent(){
+		return playbin.getVolumePercent();
 	}
 	
 	// Overrides

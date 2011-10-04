@@ -16,6 +16,9 @@ public class PlayAction extends AbstractAction {
 	private PlayAction(){
 		super("Play");
 		
+		// Keyboard shortcut
+		putValue(MNEMONIC_KEY, KeyEvent.VK_DOWN);
+		putValue(SHORT_DESCRIPTION, "Alt + Down");
 		
 		// Text handling code
 		final PlayQueue q = PlayQueue.get();

@@ -15,6 +15,9 @@ public class NextAction extends AbstractAction {
 	// Singleton Code
 	private NextAction(){
 		super("Next");
+		// Keyboard shortcut
+		putValue(MNEMONIC_KEY, KeyEvent.VK_RIGHT);
+		putValue(SHORT_DESCRIPTION, "Alt + Right");
 	}
 	
 	private static NextAction singleton = null;

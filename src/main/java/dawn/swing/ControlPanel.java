@@ -29,6 +29,9 @@ public class ControlPanel extends JToolBar{
 		addSeparator();
 		
 		add(shuffle);
+		
+		addSeparator();
+		add(VolumeSpinner.get());
 	}
 	
 }

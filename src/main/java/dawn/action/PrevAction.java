@@ -13,6 +13,10 @@ public class PrevAction extends AbstractAction{
 	// Singleton Code
 	private PrevAction(){
 		super("Previous");
+		
+		// Keyboard shortcut
+		putValue(MNEMONIC_KEY, KeyEvent.VK_LEFT);
+		putValue(SHORT_DESCRIPTION, "Alt + Left");
 	}
 	
 	private static PrevAction singleton = null;

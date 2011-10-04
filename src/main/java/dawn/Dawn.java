@@ -52,7 +52,7 @@ public class Dawn{
         // Create Dawn Window
 		SwingUtilities.invokeLater(new Runnable(){
 			public void run(){
-				new DawnWindow();
+				DawnWindow.init();
 			}
 		});
         

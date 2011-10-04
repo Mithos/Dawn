@@ -16,12 +16,20 @@ import static java.awt.BorderLayout.*;
 /**
  * The top-level dawn window.
  * 
- * On creation, this handles setting up the window (theme, objects, etc.). It also implements WindowListener to
- * make sure Gstreamer is closed correctly on an exit).
+ * On creation, this handles setting up the window (theme, objects, etc.). 
  */
-public class DawnWindow extends JFrame implements WindowListener{
+public class DawnWindow extends JFrame{
 	
-	public DawnWindow(){
+	private static DawnWindow singleton = null;
+	public static DawnWindow get(){
+		return singleton;
+	}
+	public static void init(){
+		singleton = new DawnWindow();
+	}
+	
+	
+	private DawnWindow(){
 		
 		// Super and set title
 		super("Dawn");
@@ -39,7 +47,11 @@ public class DawnWindow extends JFrame implements WindowListener{
 		}
 		
 		// Setup window events
-		addWindowListener(this);
+		addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				QuitAction.get().actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Quit"));
+			}	
+		});
 		
 		// Create accessible 'content' panel
 		JPanel content = new JPanel(new BorderLayout());
@@ -55,20 +67,9 @@ public class DawnWindow extends JFrame implements WindowListener{
 		
 		setJMenuBar(DawnMenu.get());
 		
-		// Set Window close operation and set visible
+		// set visible
 		this.pack();
 		this.setVisible(true);	
 	}
-	
-	// WindowListener methods, most do nothing, quit GST on close event
-	public void windowOpened(WindowEvent e){}
-	public void windowClosing(WindowEvent e){
-		QuitAction.get().actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "Quit"));
-	}
-	public void windowClosed(WindowEvent e){}
-	public void windowIconified(WindowEvent e){}
-	public void windowDeiconified(WindowEvent e){}
-	public void windowActivated(WindowEvent e){}
-	public void windowDeactivated(WindowEvent e){}
 	
 }
