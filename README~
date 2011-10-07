@@ -17,4 +17,4 @@ it under the terbs of this licence. See COPYING
 
 Dawn is built using the gstreamer-java library <http://http://code.google.com/p/gstreamer-java/>, which is
 licensed under the GNU Lesser General Public Lisence, and also includes images from the freedesktop tango desktop project liscensed under the
-Creative Commons Attribution-ShareAlike 2.5 License. See lib/COPYING.LESSER and lib/COPYING.CC
+Creative Commons Attribution-ShareAlike 2.5 License. See COPYING.LESSER and COPYING.CC
