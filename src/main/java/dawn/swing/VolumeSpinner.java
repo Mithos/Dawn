@@ -13,7 +13,7 @@ import dawn.lowLevel.*;
  * 
  * Unlike most of the components of Dawn, this is not a singleton, as there are two spinners in existance
  * (one in the control panel and the other in the menu). The listener and the model are singletons created
- * the first time #get() is called. however, each time #get() is called a new Spinner is returned using these
+ * the first time #get() is called. However, each time #get() is called a new Spinner is returned using these
  * components.
  */
 public class VolumeSpinner extends JPanel{

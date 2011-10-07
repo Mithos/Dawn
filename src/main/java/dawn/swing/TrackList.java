@@ -179,7 +179,7 @@ public class TrackList extends JPanel implements MouseListener, KeyListener{
     private void setTrack(){
 		if(table.getSelectedRowCount() > 0){ // Quick fix for null pointers that can potentially be generated when table is updating
 			for(int index : table.getSelectedRows()){
-				PlayQueue.get().add( (Track)model.getTrackAt(table.convertRowIndexToModel(index)));
+				PlayQueue.get().add( model.getTrackAt(table.convertRowIndexToModel(index)));
 			}
 		}
 	}	
