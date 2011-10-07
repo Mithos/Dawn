@@ -1,7 +1,7 @@
 package org.dawn.lowLevel;
 
 import javax.swing.AbstractListModel;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 import org.gstreamer.*;
@@ -28,7 +28,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	
 	
 	// Data list
-	private Vector<Track> data = new Vector<Track>();
+	private ArrayList<Track> data = new ArrayList<Track>();
 	
 	// Playbin
 	private PlayBin2 playbin = new PlayBin2("Dawn");
@@ -63,7 +63,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
         playbin.setVolumePercent(PlayQueue.INITIAL_VOLUME);
 	}
 	
-	// Vector methods
+	// ArrayList methods
 
 	/** Add a track onto the end of the list */
 	public void add(Track track){
@@ -95,7 +95,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	/** empty the queue */
 	public void clear(){
 		int index1 = data.size() - 1;
-		data = new Vector<Track>(); // clears queue, as there are no external references to data
+		data = new ArrayList<Track>(); // clears queue, as there are no external references to data
 		fireIntervalRemoved(this, 0, index1);
 	}
 
@@ -176,7 +176,7 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	}
 	
 	// Overrides
-	// List model implemented as internal vector	
+	// List model implemented as internal ArrayList	
 	@Override
 	public int getSize(){
 		return data.size();

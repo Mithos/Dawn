@@ -2,7 +2,7 @@ package org.dawn;
 
 // Import statements
 // Java utils
-import java.util.Vector;
+import java.util.ArrayList;
 import java.nio.*;
 import java.nio.file.*;
 import java.nio.charset.*;

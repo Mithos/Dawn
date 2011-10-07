@@ -44,7 +44,7 @@ public class RescanTask extends SwingWorker<Void, Track> {
 	// Instance variables for doInBackground to use
 	private Path currentPath = null;
 	private boolean currentPathScanned = false;
-	private Vector<Path> musicFiles = new Vector<Path>();
+	private ArrayList<Path> musicFiles = new ArrayList<Path>();
 	
 	/** 
 	 * The background method of this thread. It will search the Path given
