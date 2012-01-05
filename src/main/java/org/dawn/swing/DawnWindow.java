@@ -69,6 +69,7 @@ public class DawnWindow extends JFrame{
 		
 		// set visible
 		this.pack();
+		this.setLocationByPlatform(true); //let the OS handle positioning
 		this.setVisible(true);	
 	}
 	

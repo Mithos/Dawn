@@ -35,7 +35,7 @@ public class Library extends AbstractTableModel{
 	//
 	
 	private String[] columnNames = { "Track", "Title", "Artist", "Album" }; // create title names
-	private ArrayList<Track> data = new ArrayList<Track>();
+	private UniqueList<Track> data = new UniqueList<Track>();
 
 	public int getColumnCount() {
 		return columnNames.length;
@@ -85,7 +85,7 @@ public class Library extends AbstractTableModel{
 	
 	/** clear the track db */
 	public void clear(){
-		data = new ArrayList<Track>();
+		data.clear();
 		fireTableDataChanged();
 	}
 	

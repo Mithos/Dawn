@@ -39,6 +39,6 @@ public class Track{
 	 * Two tracks are equivalent if they refere to the same file
 	 */ 
 	public boolean equals(Track that){
-		return (this.file == that.file);
+		return (this.file.equals(that.file));
 	}
 }

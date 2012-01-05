@@ -69,9 +69,10 @@ public class PlayQueue extends AbstractListModel<Track> implements Bus.EOS{
 	public void add(Track track){
 		data.add(track);
 		int insertIndex = data.size() - 1;
-		if(0 == insertIndex) { // If this is the first item to be added
+		if(State.PLAYING != playbin.getState()) { // If nothing is playing, play the added track
+			playbin.setState(State.NULL); //make sure to null before trying to change track
 			playbin.setInputFile(track.file);
-			currentIndex = 0;
+			currentIndex = insertIndex;
 			play();
 		}
 		fireIntervalAdded(this, insertIndex, insertIndex);
