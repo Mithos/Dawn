@@ -1,4 +1,4 @@
-Dawn is copyright (c) 2011 James McMahon, and is released under
+Dawn is copyright (c) 2011-12 James McMahon, and is released under
 the GNU General Public Lisence version 3.0. You may use it, redistribute it, and/or modify
 it under the terbs of this licence. See COPYING
 
@@ -15,6 +15,3 @@ it under the terbs of this licence. See COPYING
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Dawn is built using the gstreamer-java library <http://http://code.google.com/p/gstreamer-java/>, which is
-licensed under the GNU Lesser General Public Lisence, and also includes images from the freedesktop tango desktop project liscensed under the
-Creative Commons Attribution-ShareAlike 2.5 License. See lib/COPYING.LESSER and lib/COPYING.CC
