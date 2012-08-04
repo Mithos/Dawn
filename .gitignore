@@ -39,7 +39,7 @@ Thumbs.db
 .classpath
 .settings/*
 
-# SBT compiled files #
+# Compiled files #
 ######################
-target/*
-project/*
+dist/*
+build/*
